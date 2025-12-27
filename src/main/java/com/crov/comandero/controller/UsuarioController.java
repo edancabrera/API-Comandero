@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.crov.comandero.dto.UsuarioDTO;
 import com.crov.comandero.service.UsuarioService;
+import com.crov.comandero.service.exception.ClaveInvalidaException;
 
 @RestController
 public class UsuarioController {
@@ -19,9 +20,8 @@ public class UsuarioController {
     //GET /login
     @GetMapping("/login/{claveComanda}")
     public ResponseEntity <?> login(@PathVariable String claveComanda) {
-        if(claveComanda == null || claveComanda.length() != 6){
-            return ResponseEntity.badRequest().body("La clave debe tener exactamente 6 caracteres");
-        }
+        if(claveComanda == null || claveComanda.length() != 6){ throw new ClaveInvalidaException(); }
+        
         UsuarioDTO usuario = usuarioService.login(claveComanda);
         return ResponseEntity.ok(usuario);
     }
