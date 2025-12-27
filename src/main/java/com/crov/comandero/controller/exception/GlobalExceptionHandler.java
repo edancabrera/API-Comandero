@@ -28,16 +28,26 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UsuarioInactivoException.class)
-    public ResponseEntity<String> handleUsuarioInactivo() {
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body("Usuario inactivo");
+    public ResponseEntity<ErrorResponseDTO> handleUsuarioInactivo(HttpServletRequest request) {
+
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            HttpStatus.FORBIDDEN.value(),
+            HttpStatus.FORBIDDEN.getReasonPhrase(),
+            "Usuario inactivo",
+            request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 
     @ExceptionHandler(RolNoPermitidoException.class)
-    public ResponseEntity<String> handleRolNoPermitido() {
-        return ResponseEntity
-                .status(HttpStatus.FORBIDDEN)
-                .body("El usuario debe ser MESERO o ADMINISTRADOR");
+    public ResponseEntity<ErrorResponseDTO> handleRolNoPermitido( HttpServletRequest request) {
+        
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            HttpStatus.FORBIDDEN.value(),
+            HttpStatus.FORBIDDEN.getReasonPhrase(),
+            "El usuario debe ser MESERO o ADMINISTRADOR",
+            request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
 }
