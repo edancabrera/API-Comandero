@@ -1,13 +1,14 @@
 package com.crov.comandero.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.crov.comandero.dto.UsuarioDTO;
 import com.crov.comandero.model.TipoCargo;
 import com.crov.comandero.model.Usuario;
 import com.crov.comandero.repository.UsuarioRepository;
+import com.crov.comandero.service.exception.RolNoPermitidoException;
+import com.crov.comandero.service.exception.UsuarioInactivoException;
+import com.crov.comandero.service.exception.UsuarioNoEncontradoException;
 
 @Service
 public class UsuarioService {
@@ -18,19 +19,21 @@ public class UsuarioService {
     }
 
     public UsuarioDTO login(String claveComanda) {
-        Optional <Usuario> usuarioOpt = usuarioRepository.findByClaveComanda(claveComanda);
-        if(usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-            if(Boolean.TRUE.equals(usuario.getActivo()) && (usuario.getTipoCargo() == TipoCargo.MESERO || usuario.getTipoCargo() == TipoCargo.ADMINISTRADOR)) {
-                return new UsuarioDTO(
-                    usuario.getIdu(),
-                    usuario.getNombre(),
-                    usuario.getApellidos(),
-                    usuario.getEmail(),
-                    usuario.getTipoCargo()
-                );
-            }
+        Usuario usuario = usuarioRepository.findByClaveComanda(claveComanda)
+                .orElseThrow(UsuarioNoEncontradoException::new);
+
+        if (!Boolean.TRUE.equals(usuario.getActivo())) {
+            throw new UsuarioInactivoException();
         }
-        return null;
+
+        if (usuario.getTipoCargo() != TipoCargo.MESERO || usuario.getTipoCargo() != TipoCargo.ADMINISTRADOR) {
+            throw new RolNoPermitidoException();
+        }
+        return new UsuarioDTO(
+                usuario.getIdu(),
+                usuario.getNombre(),
+                usuario.getApellidos(),
+                usuario.getEmail(),
+                usuario.getTipoCargo());
     }
 }
