@@ -19,10 +19,14 @@ public class UsuarioController {
 
     //GET /login
     @GetMapping("/login/{claveComanda}")
-    public ResponseEntity <UsuarioDTO> login(@PathVariable String claveComanda) {
+    public ResponseEntity <?> login(@PathVariable String claveComanda) {
+        if(claveComanda == null || claveComanda.length() != 6){
+            return ResponseEntity.badRequest().body("La clave debe tener exactamente 6 caracteres");
+        }
         UsuarioDTO usuario = usuarioService.login(claveComanda);
+
         if (usuario == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Clave inválida");
         }
         return ResponseEntity.ok(usuario);
     }
