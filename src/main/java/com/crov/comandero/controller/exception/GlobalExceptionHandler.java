@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.crov.comandero.dto.ErrorResponseDTO;
+import com.crov.comandero.service.exception.ClaveInvalidaException;
 import com.crov.comandero.service.exception.RolNoPermitidoException;
 import com.crov.comandero.service.exception.UsuarioInactivoException;
 import com.crov.comandero.service.exception.UsuarioNoEncontradoException;
@@ -49,5 +50,17 @@ public class GlobalExceptionHandler {
             request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
+    @ExceptionHandler(ClaveInvalidaException.class)
+    public ResponseEntity<ErrorResponseDTO> handleClaveInvalida( HttpServletRequest request){
+
+        ErrorResponseDTO error = new ErrorResponseDTO(
+            HttpStatus.BAD_REQUEST.value(),
+            HttpStatus.BAD_REQUEST.getReasonPhrase(),
+            "La clave debe tener exactamente 6 caracteres",
+            request.getRequestURI());
+        
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }
