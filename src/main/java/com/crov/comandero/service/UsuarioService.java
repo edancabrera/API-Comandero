@@ -26,7 +26,7 @@ public class UsuarioService {
             throw new UsuarioInactivoException();
         }
 
-        if (usuario.getTipoCargo() != TipoCargo.MESERO || usuario.getTipoCargo() != TipoCargo.ADMINISTRADOR) {
+        if (!(usuario.getTipoCargo() == TipoCargo.MESERO || usuario.getTipoCargo() == TipoCargo.ADMINISTRADOR)) {
             throw new RolNoPermitidoException();
         }
         return new UsuarioDTO(
