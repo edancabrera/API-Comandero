@@ -1,6 +1,9 @@
 package com.crov.comandero.controller;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -17,7 +20,11 @@ public class UsuarioController {
 
     //GET /login
     @GetMapping("/login/{claveComanda}")
-    public UsuarioDTO login(@PathVariable String claveComanda) {
-        return usuarioService.login(claveComanda);
+    public ResponseEntity <UsuarioDTO> login(@PathVariable String claveComanda) {
+        UsuarioDTO usuario = usuarioService.login(claveComanda);
+        if (usuario == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(usuario);
     }
 }
