@@ -29,6 +29,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleRolNoPermitido() {
         return ResponseEntity
                 .status(HttpStatus.FORBIDDEN)
-                .body("Rol no autorizado");
+                .body("El usuario debe ser MESERO o ADMINISTRADOR");
     }
 }

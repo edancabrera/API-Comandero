@@ -1,7 +1,6 @@
 package com.crov.comandero.controller;
 
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,10 +23,6 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body("La clave debe tener exactamente 6 caracteres");
         }
         UsuarioDTO usuario = usuarioService.login(claveComanda);
-
-        if (usuario == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Clave inválida");
-        }
         return ResponseEntity.ok(usuario);
     }
 }
