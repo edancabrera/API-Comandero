@@ -16,6 +16,6 @@ public class AreaService {
     }
 
     public List<Area> listarAreas(){
-        return areaRepository.findAll();
+        return areaRepository.findByActivo(true);
     }
 }
