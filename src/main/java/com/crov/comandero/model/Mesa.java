@@ -9,7 +9,7 @@ public class Mesa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idu")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "id_area")
