@@ -21,7 +21,7 @@ public class MesaController {
     }
 
     //GET /mesa/{idArea}
-    @GetMapping("/mesa/{idArea}")
+    @GetMapping("/mesas/{idArea}")
     public ResponseEntity<List<Mesa>> listarMesasPorArea(@PathVariable Integer idArea) {
         return ResponseEntity.ok(mesaService.listarMesasPorArea(idArea));
     }
