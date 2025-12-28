@@ -17,8 +17,8 @@ public class ProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public List<ProductoPrecioDTO> listarPrecioProductos(){
-        List<Producto> productos = productoRepository.findAll();
+    public List<ProductoPrecioDTO> listarPrecioProductosActivos(){
+        List<Producto> productos = productoRepository.findByActivo(true);
 
         return productos.stream()
                 .map(producto -> new ProductoPrecioDTO(

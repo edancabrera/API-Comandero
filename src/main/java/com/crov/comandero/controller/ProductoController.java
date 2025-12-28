@@ -20,6 +20,6 @@ public class ProductoController {
 
     @GetMapping("/precios")
     public ResponseEntity<List<ProductoPrecioDTO>> listarPrecioProductos() {
-        return ResponseEntity.ok(productoService.listarPrecioProductos());
+        return ResponseEntity.ok(productoService.listarPrecioProductosActivos());
     }
 }
