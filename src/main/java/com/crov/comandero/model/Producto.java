@@ -30,6 +30,9 @@ public class Producto {
     @Column(name = "precio1")
     private Double precio1;
 
+    @Column(name = "mostrar_en_el_menu")
+    private Boolean mostrarEnElMenu;
+
     public Integer getIdProducto() {
         return idProducto;
     }
@@ -84,5 +87,13 @@ public class Producto {
 
     public void setPrecio1(Double precio1) {
         this.precio1 = precio1;
+    }
+
+    public Boolean getMostrarEnElMenu() {
+        return mostrarEnElMenu;
+    }
+
+    public void setMostrarEnElMenu(Boolean mostrarEnElMenu) {
+        this.mostrarEnElMenu = mostrarEnElMenu;
     }
 }
