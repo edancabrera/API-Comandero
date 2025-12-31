@@ -25,6 +25,6 @@ public class CategoriaPlatilloService {
 
     public List<CategoriaPlatillo> listarCategoriasPorMesa(String mesa){
         Menu menu = Menu.valueOf(mesa.toUpperCase());
-        return categoriaPlatilloRepository.findByMenu(menu);
+        return categoriaPlatilloRepository.findByMenuAndActivo(menu, true);
     }
 }

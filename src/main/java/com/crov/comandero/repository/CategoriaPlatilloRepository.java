@@ -12,5 +12,5 @@ public interface CategoriaPlatilloRepository extends JpaRepository<CategoriaPlat
     @Query("SELECT DISTINCT c.menu FROM CategoriaPlatillo c WHERE c.activo = true")
     List<Menu> findMenusUnicos();
 
-    List<CategoriaPlatillo> findByMenu(Menu menu);
+    List<CategoriaPlatillo> findByMenuAndActivo(Menu menu, Boolean activo);
 }
