@@ -1,9 +1,9 @@
 package com.crov.comandero.dto;
 
-public class productoPlatilloDTO {
-    public productoPlatilloDTO(){}
+public class ProductoPlatilloDTO {
+    public ProductoPlatilloDTO(){}
 
-    public productoPlatilloDTO(Integer idProducto, String nombre, Boolean activo, Double precio1, Boolean mostrarEnElMenu, Boolean platillo, Integer idCategoriaPlatillo){
+    public ProductoPlatilloDTO(Integer idProducto, String nombre, Boolean activo, Double precio1, Boolean mostrarEnElMenu, Boolean platillo, Integer idCategoriaPlatillo){
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.activo = activo;
@@ -65,3 +65,4 @@ public class productoPlatilloDTO {
     }
 
 }
+
