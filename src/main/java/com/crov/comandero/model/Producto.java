@@ -103,7 +103,7 @@ public class Producto {
         this.mostrarEnElMenu = mostrarEnElMenu;
     }
 
-    public Boolean getPlatillo(Boolean platillo) {
+    public Boolean getPlatillo() {
         return platillo;
     }
 
@@ -111,7 +111,7 @@ public class Producto {
         this.platillo = platillo;
     }
 
-    public Integer getIdCategoriaPlatillo(Integer idCategoriaPlatillo) {
+    public Integer getIdCategoriaPlatillo() {
         return idCategoriaPlatillo;
     }
 

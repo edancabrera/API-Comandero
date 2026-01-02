@@ -9,6 +9,5 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer>{
 
     List<Producto> findByActivo(Boolean activo);
     List<Producto> findByActivoAndMostrarEnElMenu(Boolean activo, Boolean mostrarEnElMenu);
-
-    List<Producto> findByActivoAndMostrarEnElMenuAndPlatillo(Boolean activo, Boolean mostrarEnElMenu, Boolean platillo);
+    List<Producto> findByIdCategoriaPlatilloAndActivoAndMostrarEnElMenuAndPlatillo(Integer idCategoriaPlatillo, Boolean activo, Boolean mostrarEnElMenu, Boolean platillo);
 }
