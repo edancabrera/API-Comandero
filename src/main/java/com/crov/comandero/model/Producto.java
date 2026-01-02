@@ -33,6 +33,12 @@ public class Producto {
     @Column(name = "mostrar_en_el_menu")
     private Boolean mostrarEnElMenu;
 
+    @Column(name = "platillo")
+    private Boolean platillo;
+
+    @Column(name = "id_categoria_platillo")
+    private Integer idCategoriaPlatillo;
+
     public Integer getIdProducto() {
         return idProducto;
     }
@@ -95,5 +101,21 @@ public class Producto {
 
     public void setMostrarEnElMenu(Boolean mostrarEnElMenu) {
         this.mostrarEnElMenu = mostrarEnElMenu;
+    }
+
+    public Boolean getPlatillo(Boolean platillo) {
+        return platillo;
+    }
+
+    public void setPlatillo(Boolean platillo) {
+        this.platillo = platillo;
+    }
+
+    public Integer getIdCategoriaPlatillo(Integer idCategoriaPlatillo) {
+        return idCategoriaPlatillo;
+    }
+
+    public void setIdCategoriaPlatillo(Integer idCategoriaPlatillo) {
+        this.idCategoriaPlatillo = idCategoriaPlatillo;
     }
 }
