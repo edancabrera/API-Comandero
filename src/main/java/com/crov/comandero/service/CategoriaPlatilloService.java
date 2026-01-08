@@ -26,8 +26,7 @@ public class CategoriaPlatilloService {
         return menus.stream().map(menu -> new MenuDTO(menu.name())).collect(Collectors.toList());
     }
 
-    public List<CategoriaPlatillo> listarCategoriasPorMesa(String mesa){
-        Menu menu = Menu.valueOf(mesa.toUpperCase());
+    public List<CategoriaPlatillo> listarCategoriasPorMenu(Menu menu){
         return categoriaPlatilloRepository.findByMenuAndActivo(menu, true);
     }
 
