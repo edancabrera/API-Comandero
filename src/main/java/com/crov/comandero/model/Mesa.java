@@ -12,8 +12,9 @@ public class Mesa {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_area")
-    private Integer idArea;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "id_area", nullable = false)
+    private Area area;
 
     @Column(name = "nombre")
     private String nombre;
@@ -28,8 +29,9 @@ public class Mesa {
     @Column(name = "estatus")
     private MesaEstatus estatus;
 
-    @Column(name = "id_mesa_principal")
-    private Integer idMesaPrincipal;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_mesa_principal")
+    private Mesa mesaPrincipal;
 
     public Integer getId() {
         return id;
@@ -39,12 +41,12 @@ public class Mesa {
         this.id = id;
     }
 
-    public Integer getIdArea() {
-        return idArea;
+    public Area getArea() {
+        return area;
     }
 
-    public void setIdArea(Integer idArea) {
-        this.idArea = idArea;
+    public void setArea(Area area) {
+        this.area = area;
     }
 
     public String getNombre() {
@@ -79,11 +81,11 @@ public class Mesa {
         this.estatus = estatus;
     }
 
-    public Integer getIdMesaPrincipal() {
-        return idMesaPrincipal;
+    public Mesa getMesaPrincipal() {
+        return mesaPrincipal;
     }
 
-    public void setIdMesaPrincipal(Integer idMesaPrincipal) {
-        this.idMesaPrincipal = idMesaPrincipal;
+    public void setMesaPrincipal(Mesa mesaPrincipal) {
+        this.mesaPrincipal = mesaPrincipal;
     }
 }

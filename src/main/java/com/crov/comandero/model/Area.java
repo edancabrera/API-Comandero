@@ -1,5 +1,9 @@
 package com.crov.comandero.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -22,6 +26,10 @@ public class Area {
 
     @Column(name = "zona_fumadores")
     private Boolean zonaFumadores;
+
+    @OneToMany(mappedBy = "area", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Mesa> mesas;
 
     public Area(){}
 
@@ -54,6 +62,14 @@ public class Area {
     }
     public void setZonaFumadores(Boolean zonaFumadores) {
         this.zonaFumadores = zonaFumadores;
+    }
+
+    public List<Mesa> getMesas() {
+        return mesas;
+    }
+
+    public void setMesas(List<Mesa> mesas) {
+        this.mesas = mesas;
     }
 
 }
