@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.crov.comandero.dto.MenuDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
 import com.crov.comandero.model.Menu;
+import com.crov.comandero.model.Producto;
 import com.crov.comandero.repository.CategoriaPlatilloRepository;
 
 @Service
@@ -26,5 +27,11 @@ public class CategoriaPlatilloService {
     public List<CategoriaPlatillo> listarCategoriasPorMesa(String mesa){
         Menu menu = Menu.valueOf(mesa.toUpperCase());
         return categoriaPlatilloRepository.findByMenuAndActivo(menu, true);
+    }
+
+    public List<Producto> obtenerProductosPorCategoria(Integer idCategoria) {
+        CategoriaPlatillo categoriaPlatillo = categoriaPlatilloRepository.findById(idCategoria).orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
+
+        return categoriaPlatillo.getProductos();
     }
 }

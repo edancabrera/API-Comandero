@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.MenuDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
+import com.crov.comandero.model.Producto;
 import com.crov.comandero.service.CategoriaPlatilloService;
 
 import java.util.List;
@@ -34,4 +35,10 @@ public class CategoriaPlatilloController {
         List<CategoriaPlatillo> categorias = categoriaPlatilloService.listarCategoriasPorMesa(mesa);
         return ResponseEntity.ok(categorias);
     }
+
+    @GetMapping("/categorias/{id}/productos")
+    public ResponseEntity<List<Producto>> listarProductos(@PathVariable Integer id) {
+        return ResponseEntity.ok( categoriaPlatilloService.obtenerProductosPorCategoria(id)
+    );
+}
 }

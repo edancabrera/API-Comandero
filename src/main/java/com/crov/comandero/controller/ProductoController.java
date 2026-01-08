@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.crov.comandero.dto.ProductoPlatilloDTO;
 import com.crov.comandero.dto.ProductoPrecioDTO;
 import com.crov.comandero.service.ProductoService;
 
@@ -23,11 +22,4 @@ public class ProductoController {
     public ResponseEntity<List<ProductoPrecioDTO>> listarPrecioProductos() {
         return ResponseEntity.ok(productoService.listarPrecioProductosActivos());
     }
-
-    @GetMapping("/platillos/{idCategoria}")
-    public ResponseEntity<List<ProductoPlatilloDTO>> listarProductosPlatillosActivos(@PathVariable Integer idCategoria) {
-        List<ProductoPlatilloDTO> platillos = productoService.listarProductosPlatillosActivos(idCategoria);
-        return ResponseEntity.ok(platillos);
-    }
-    
 }
