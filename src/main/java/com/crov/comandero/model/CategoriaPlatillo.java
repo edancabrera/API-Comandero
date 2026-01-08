@@ -27,6 +27,7 @@ public class CategoriaPlatillo {
     private Boolean activo;
     
     @OneToMany(mappedBy = "categoriaPlatillo")
+    @JsonIgnore
     private List<ComplementosCategoriaPlatillo> complementos;
 
     @OneToMany(mappedBy = "categoriaPlatillo", fetch = FetchType.LAZY)

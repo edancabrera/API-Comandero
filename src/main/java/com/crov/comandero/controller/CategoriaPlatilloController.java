@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.MenuDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
+import com.crov.comandero.model.ComplementosPlatillo;
 import com.crov.comandero.model.Producto;
 import com.crov.comandero.service.CategoriaPlatilloService;
 
@@ -38,7 +39,16 @@ public class CategoriaPlatilloController {
 
     @GetMapping("/categorias/{id}/productos")
     public ResponseEntity<List<Producto>> listarProductos(@PathVariable Integer id) {
-        return ResponseEntity.ok( categoriaPlatilloService.obtenerProductosPorCategoria(id)
-    );
-}
+        return ResponseEntity.ok( categoriaPlatilloService.obtenerProductosPorCategoria(id));
+    }
+
+    @GetMapping("/categorias/{id}/complementos")
+    public ResponseEntity<List<ComplementosPlatillo>> listarComplementos(
+            @PathVariable Integer id) {
+
+        List<ComplementosPlatillo> complementos =
+            categoriaPlatilloService.obtenerComplementosPorCategoria(id);
+
+        return ResponseEntity.ok(complementos);
+    }
 }
