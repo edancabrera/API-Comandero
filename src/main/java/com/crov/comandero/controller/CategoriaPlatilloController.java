@@ -32,7 +32,7 @@ public class CategoriaPlatilloController {
     }
 
     //Get /categoria/{mesa}
-    @GetMapping("/menus/{menu}/categoria")
+    @GetMapping("/menus/{menu}/categorias")
     public ResponseEntity <List<CategoriaPlatillo>> listarCategoriasPorMesa(@PathVariable Menu menu) {
         List<CategoriaPlatillo> categorias = categoriaPlatilloService.listarCategoriasPorMenu(menu);
         return ResponseEntity.ok(categorias);
