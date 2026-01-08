@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ComplementosCategoriaPlatilloRespository extends JpaRepository<ComplementosCategoriaPlatillo, Integer>{
-    List<ComplementosCategoriaPlatillo> findByIdCategoriaPlatilloAndActivoTrue(Integer idCategoriaPlatillo);
+    //List<ComplementosCategoriaPlatillo> findByIdCategoriaPlatilloAndActivoTrue(Integer idCategoriaPlatillo);
 }

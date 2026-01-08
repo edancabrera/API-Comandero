@@ -15,8 +15,9 @@ public class ComplementosCategoriaPlatillo {
     @Column(name = "activo")
     private Boolean activo;
 
-    @Column(name = "id_categoria_platillo")
-    private Integer idCategoriaPlatillo;
+    @ManyToOne
+    @JoinColumn(name = "id_categoria_platillo", nullable = false)
+    private CategoriaPlatillo categoriaPlatillo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
@@ -41,12 +42,12 @@ public class ComplementosCategoriaPlatillo {
         this.activo = activo;
     }
 
-    public Integer getIdCategoriaPlatillo() {
-        return idCategoriaPlatillo;
+    public CategoriaPlatillo getCategoriaPlatillo() {
+        return categoriaPlatillo;
     }
 
-    public void setIdCategoriaPlatillo(Integer idCategoriaPlatillo) {
-        this.idCategoriaPlatillo = idCategoriaPlatillo;
+    public void setCategoriaPlatillo(CategoriaPlatillo categoriaPlatillo) {
+        this.categoriaPlatillo = categoriaPlatillo;
     }
 
     public ComplementosPlatillo getComplementosPlatillo() {
@@ -56,7 +57,5 @@ public class ComplementosCategoriaPlatillo {
     public void setComplementosPlatillo(ComplementosPlatillo complementosPlatillo) {
         this.complementosPlatillo = complementosPlatillo;
     }
-
-    
 
 }

@@ -14,10 +14,10 @@ public class ComplementosCategoriaPlatilloService {
         this.complementosCategoriaPlatilloRespository = complementosCategoriaPlatilloRespository;
     }
 
-    public List<String> obtenerComplementos(Integer idCategoria) {
-        return complementosCategoriaPlatilloRespository.findByIdCategoriaPlatilloAndActivoTrue(idCategoria)
-                    .stream()
-                    .map(ccp -> ccp.getComplementosPlatillo().getDescripsion())
-                    .toList();
-    }
+    // public List<String> obtenerComplementos(Integer idCategoria) {
+    //     return complementosCategoriaPlatilloRespository.findByIdCategoriaPlatilloAndActivoTrue(idCategoria)
+    //                 .stream()
+    //                 .map(ccp -> ccp.getComplementosPlatillo().getDescripsion())
+    //                 .toList();
+    // }
 }

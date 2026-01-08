@@ -25,6 +25,9 @@ public class CategoriaPlatillo {
 
     @Column(name = "activo")
     private Boolean activo;
+    
+    @OneToMany(mappedBy = "categoriaPlatillo")
+    private List<ComplementosCategoriaPlatillo> complementos;
 
     @OneToMany(mappedBy = "categoriaPlatillo", fetch = FetchType.LAZY)
     @JsonIgnore
@@ -68,6 +71,14 @@ public class CategoriaPlatillo {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+    }
+
+    public List<ComplementosCategoriaPlatillo> getComplementos() {
+        return complementos;
+    }
+
+    public void setComplementos(List<ComplementosCategoriaPlatillo> complementos) {
+        this.complementos = complementos;
     }
 
 }

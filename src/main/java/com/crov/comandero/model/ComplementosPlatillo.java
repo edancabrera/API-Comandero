@@ -1,5 +1,7 @@
 package com.crov.comandero.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -17,6 +19,9 @@ public class ComplementosPlatillo {
 
     @Column(name = "descripsion")
     private String descripsion;
+
+    @OneToMany(mappedBy = "complementosPlatillo")
+    private List<ComplementosCategoriaPlatillo> categorias;
 
     public Integer getId() {
         return id;
@@ -40,5 +45,13 @@ public class ComplementosPlatillo {
 
     public void setDescripsion(String descripsion) {
         this.descripsion = descripsion;
+    }
+
+    public List<ComplementosCategoriaPlatillo> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<ComplementosCategoriaPlatillo> categorias) {
+        this.categorias = categorias;
     }
 }

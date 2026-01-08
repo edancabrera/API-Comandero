@@ -21,11 +21,11 @@ public class ComplementosCategoriaPlatilloController {
         
     
 
-    @GetMapping("/complementos/{idCategoria}")
-    public ResponseEntity<List<String>> obtenerComplementos(@PathVariable Integer idCategoria){
-        return ResponseEntity.ok(
-            complementosCategoriaPlatilloService.obtenerComplementos(idCategoria)
-        );
-    }
+    // @GetMapping("/complementos/{idCategoria}")
+    // public ResponseEntity<List<String>> obtenerComplementos(@PathVariable Integer idCategoria){
+    //     return ResponseEntity.ok(
+    //         complementosCategoriaPlatilloService.obtenerComplementos(idCategoria)
+    //     );
+    // }
 
 }
