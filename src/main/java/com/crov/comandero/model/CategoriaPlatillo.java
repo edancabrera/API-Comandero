@@ -1,5 +1,9 @@
 package com.crov.comandero.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +25,10 @@ public class CategoriaPlatillo {
 
     @Column(name = "activo")
     private Boolean activo;
+
+    @OneToMany(mappedBy = "categoriaPlatillo", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Producto> productos;
 
     public Integer getId() {
         return id;
@@ -52,6 +60,14 @@ public class CategoriaPlatillo {
 
     public void setActivo(Boolean activo) {
         this.activo = activo;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 
 }
