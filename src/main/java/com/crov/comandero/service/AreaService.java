@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.crov.comandero.model.Area;
+import com.crov.comandero.model.Mesa;
 import com.crov.comandero.repository.AreaRepository;
 
 @Service
@@ -17,5 +18,10 @@ public class AreaService {
 
     public List<Area> listarAreas(){
         return areaRepository.findByActivo(true);
+    }
+
+    public List<Mesa> obtenerMesasPorArea(Integer idArea){
+        Area area = areaRepository.findById(idArea).orElseThrow(()-> new RuntimeException("Area no encontrada"));
+        return area.getMesas();
     }
 }
