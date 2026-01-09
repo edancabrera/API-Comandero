@@ -2,7 +2,6 @@ package com.crov.comandero.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crov.comandero.dto.MenuDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
 import com.crov.comandero.model.ComplementosPlatillo;
 import com.crov.comandero.model.Menu;
@@ -25,10 +24,10 @@ public class CategoriaPlatilloController {
         this.categoriaPlatilloService = categoriaPlatilloService;
     }
 
-    //GET /menus
-    @GetMapping("/menus")
-    public ResponseEntity<List<MenuDTO>> listarMenus() {
-        return ResponseEntity.ok(categoriaPlatilloService.listarMenusExistentes());
+    //GET /categoria-platillo/menus
+    @GetMapping("/categoria-platillo/menus")
+    public ResponseEntity<List<Menu>> listarMenus() {
+        return ResponseEntity.ok(categoriaPlatilloService.listarMenus());
     }
 
     //Get /categoria/{mesa}

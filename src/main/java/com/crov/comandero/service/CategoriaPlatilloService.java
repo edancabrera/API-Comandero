@@ -1,11 +1,9 @@
 package com.crov.comandero.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.crov.comandero.dto.MenuDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
 import com.crov.comandero.model.ComplementosCategoriaPlatillo;
 import com.crov.comandero.model.ComplementosPlatillo;
@@ -21,9 +19,8 @@ public class CategoriaPlatilloService {
         this.categoriaPlatilloRepository = categoriaPlatilloRepository;
     }
 
-    public List<MenuDTO> listarMenusExistentes(){
-        List<Menu> menus = categoriaPlatilloRepository.findMenusUnicos();
-        return menus.stream().map(menu -> new MenuDTO(menu.name())).collect(Collectors.toList());
+    public List<Menu> listarMenus(){
+        return categoriaPlatilloRepository.findMenusUnicos();
     }
 
     public List<CategoriaPlatillo> listarCategoriasPorMenu(Menu menu){
