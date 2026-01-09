@@ -7,5 +7,5 @@ import java.util.List;
 
 
 public interface AreaRepository extends JpaRepository<Area, Integer>{
-    List<Area> findByActivo(Boolean activo);
+    List<Area> findByActivoTrue();
 }

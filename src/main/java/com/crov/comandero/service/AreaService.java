@@ -17,7 +17,7 @@ public class AreaService {
     }
 
     public List<Area> listarAreas(){
-        return areaRepository.findByActivo(true);
+        return areaRepository.findByActivoTrue();
     }
 
     public List<Mesa> obtenerMesasPorArea(Integer idArea){
