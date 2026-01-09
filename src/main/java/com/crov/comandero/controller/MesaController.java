@@ -2,7 +2,7 @@ package com.crov.comandero.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.crov.comandero.model.Mesa;
+import com.crov.comandero.dto.MesaDTO;
 import com.crov.comandero.service.MesaService;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class MesaController {
     }
 
     @GetMapping("/areas/{id}/mesas")
-    public ResponseEntity<List<Mesa>> listarMesasPorArea(@PathVariable Integer id) {
+    public ResponseEntity<List<MesaDTO>> listarMesasPorArea(@PathVariable Integer id) {
         return ResponseEntity.ok(mesaService.obtenerMesasPorArea(id));
     }
 }
