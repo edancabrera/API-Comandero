@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import com.crov.comandero.model.Area;
-import com.crov.comandero.model.Mesa;
 import com.crov.comandero.service.AreaService;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -22,10 +21,4 @@ public class AreaController {
     public ResponseEntity<List<Area>> listarAreas() {
         return ResponseEntity.ok(areaService.listarAreas());
     }
-
-    @GetMapping("/areas/{id}/mesas")
-    public ResponseEntity<List<Mesa>> listarMesasPorArea(@PathVariable Integer id) {
-        return ResponseEntity.ok(areaService.obtenerMesasPorArea(id));
-    }
-    
 }
