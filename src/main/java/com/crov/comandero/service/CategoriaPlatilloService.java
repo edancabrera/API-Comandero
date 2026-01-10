@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.crov.comandero.dto.ProductoPlatilloDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
 import com.crov.comandero.model.ComplementosCategoriaPlatillo;
 import com.crov.comandero.model.ComplementosPlatillo;
 import com.crov.comandero.model.Menu;
-import com.crov.comandero.model.Producto;
 import com.crov.comandero.repository.CategoriaPlatilloRepository;
 import com.crov.comandero.repository.ProductoRepository;
 
@@ -30,8 +30,17 @@ public class CategoriaPlatilloService {
         return categoriaPlatilloRepository.findByMenuAndActivoTrue(menu);
     }
 
-    public List<Producto> obtenerPlatillos( Integer idCategoria) {
-        return productoRepository.findByCategoriaPlatillo_IdAndActivoTrueAndPlatilloTrueAndMostrarEnElMenuTrue(idCategoria);
+    public List<ProductoPlatilloDTO> obtenerPlatillos( Integer idCategoria) {
+        return  productoRepository.findByCategoriaPlatillo_IdAndActivoTrueAndPlatilloTrueAndMostrarEnElMenuTrue(idCategoria)
+                .stream()
+                .map(platillo -> new ProductoPlatilloDTO(
+                    platillo.getIdProducto(),
+                    platillo.getNombre(),
+                    platillo.getPrecio1(),
+                    platillo.getCategoriaPlatillo() != null ? platillo.getCategoriaPlatillo().getId() : null
+                ))
+                .toList();
+        
     }
 
     public List<ComplementosPlatillo> obtenerComplementosPorCategoria(Integer idCategoria) {
