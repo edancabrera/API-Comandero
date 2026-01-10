@@ -42,12 +42,12 @@ public class CategoriaPlatilloController {
         return ResponseEntity.ok( categoriaPlatilloService.obtenerPlatillos(id));
     }
 
-    @GetMapping("/categorias/{id}/complementos")
+    @GetMapping("/categoria-platillo/{id}/complementos")
     public ResponseEntity<List<ComplementosPlatillo>> listarComplementos(
             @PathVariable Integer id) {
 
         List<ComplementosPlatillo> complementos =
-            categoriaPlatilloService.obtenerComplementosPorCategoria(id);
+            categoriaPlatilloService.obtenerComplementos(id);
 
         return ResponseEntity.ok(complementos);
     }

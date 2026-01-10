@@ -6,20 +6,22 @@ import org.springframework.stereotype.Service;
 
 import com.crov.comandero.dto.ProductoPlatilloDTO;
 import com.crov.comandero.model.CategoriaPlatillo;
-import com.crov.comandero.model.ComplementosCategoriaPlatillo;
 import com.crov.comandero.model.ComplementosPlatillo;
 import com.crov.comandero.model.Menu;
 import com.crov.comandero.repository.CategoriaPlatilloRepository;
+import com.crov.comandero.repository.ComplementosCategoriaPlatilloRepository;
 import com.crov.comandero.repository.ProductoRepository;
 
 @Service
 public class CategoriaPlatilloService {
     private final CategoriaPlatilloRepository categoriaPlatilloRepository;
     private final ProductoRepository productoRepository;
+    private final ComplementosCategoriaPlatilloRepository complementosCategoriaPlatilloRepository;
 
-    public CategoriaPlatilloService (CategoriaPlatilloRepository categoriaPlatilloRepository, ProductoRepository productoRepository){
+    public CategoriaPlatilloService (CategoriaPlatilloRepository categoriaPlatilloRepository, ProductoRepository productoRepository, ComplementosCategoriaPlatilloRepository complementosCategoriaPlatilloRepository){
         this.categoriaPlatilloRepository = categoriaPlatilloRepository;
         this.productoRepository = productoRepository;
+        this.complementosCategoriaPlatilloRepository = complementosCategoriaPlatilloRepository;
     }
 
     public List<Menu> listarMenus(){
@@ -43,16 +45,7 @@ public class CategoriaPlatilloService {
         
     }
 
-    public List<ComplementosPlatillo> obtenerComplementosPorCategoria(Integer idCategoria) {
-
-        CategoriaPlatillo categoria = categoriaPlatilloRepository.findById(idCategoria)
-            .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-
-        return categoria.getComplementos()
-            .stream()
-            .filter(rel -> Boolean.TRUE.equals(rel.getActivo()))
-            .map(ComplementosCategoriaPlatillo::getComplementosPlatillo)
-            .filter(comp -> Boolean.TRUE.equals(comp.getActivo()))
-            .toList();
+    public List<ComplementosPlatillo> obtenerComplementos(Integer idCategoria){
+        return complementosCategoriaPlatilloRepository.findComplementosActivosPorCategoria(idCategoria);
     }
 }
