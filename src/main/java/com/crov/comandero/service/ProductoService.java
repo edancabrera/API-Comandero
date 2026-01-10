@@ -17,8 +17,8 @@ public class ProductoService {
         this.productoRepository = productoRepository;
     }
 
-    public List<ProductoPrecioDTO> listarPrecioProductosActivos(){
-        List<Producto> productos = productoRepository.findByActivoAndMostrarEnElMenu(true, true);
+    public List<ProductoPrecioDTO> listarPrecioProductos(){
+        List<Producto> productos = productoRepository.findByActivoTrueAndMostrarEnElMenuTrue();
 
         return productos.stream()
                 .map(producto -> new ProductoPrecioDTO(
