@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer>{
 
-    
     List<Producto> findByActivoTrueAndMostrarEnElMenuTrue();
+
+    List<Producto> findByCategoriaPlatillo_IdAndActivoTrueAndPlatilloTrueAndMostrarEnElMenuTrue(Integer idCategoria);
 }

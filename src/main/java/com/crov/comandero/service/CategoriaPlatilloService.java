@@ -10,13 +10,16 @@ import com.crov.comandero.model.ComplementosPlatillo;
 import com.crov.comandero.model.Menu;
 import com.crov.comandero.model.Producto;
 import com.crov.comandero.repository.CategoriaPlatilloRepository;
+import com.crov.comandero.repository.ProductoRepository;
 
 @Service
 public class CategoriaPlatilloService {
     private final CategoriaPlatilloRepository categoriaPlatilloRepository;
+    private final ProductoRepository productoRepository;
 
-    public CategoriaPlatilloService (CategoriaPlatilloRepository categoriaPlatilloRepository){
+    public CategoriaPlatilloService (CategoriaPlatilloRepository categoriaPlatilloRepository, ProductoRepository productoRepository){
         this.categoriaPlatilloRepository = categoriaPlatilloRepository;
+        this.productoRepository = productoRepository;
     }
 
     public List<Menu> listarMenus(){
@@ -27,10 +30,8 @@ public class CategoriaPlatilloService {
         return categoriaPlatilloRepository.findByMenuAndActivoTrue(menu);
     }
 
-    public List<Producto> obtenerProductosPorCategoria(Integer idCategoria) {
-        CategoriaPlatillo categoriaPlatillo = categoriaPlatilloRepository.findById(idCategoria).orElseThrow(()-> new RuntimeException("Categoria no encontrada"));
-
-        return categoriaPlatillo.getProductos();
+    public List<Producto> obtenerPlatillos( Integer idCategoria) {
+        return productoRepository.findByCategoriaPlatillo_IdAndActivoTrueAndPlatilloTrueAndMostrarEnElMenuTrue(idCategoria);
     }
 
     public List<ComplementosPlatillo> obtenerComplementosPorCategoria(Integer idCategoria) {

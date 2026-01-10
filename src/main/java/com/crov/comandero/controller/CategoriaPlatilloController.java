@@ -37,9 +37,9 @@ public class CategoriaPlatilloController {
         return ResponseEntity.ok(categorias);
     }
 
-    @GetMapping("/categorias/{id}/productos")
+    @GetMapping("/categoria-platillo/{id}/platillos")
     public ResponseEntity<List<Producto>> listarProductos(@PathVariable Integer id) {
-        return ResponseEntity.ok( categoriaPlatilloService.obtenerProductosPorCategoria(id));
+        return ResponseEntity.ok( categoriaPlatilloService.obtenerPlatillos(id));
     }
 
     @GetMapping("/categorias/{id}/complementos")
