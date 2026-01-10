@@ -30,8 +30,8 @@ public class CategoriaPlatilloController {
         return ResponseEntity.ok(categoriaPlatilloService.listarMenus());
     }
 
-    //Get /categoria/{mesa}
-    @GetMapping("/menus/{menu}/categorias")
+    //Get /categoria-platillo/{menu}
+    @GetMapping("/categoria-platillo/{menu}")
     public ResponseEntity <List<CategoriaPlatillo>> listarCategoriasPorMesa(@PathVariable Menu menu) {
         List<CategoriaPlatillo> categorias = categoriaPlatilloService.listarCategoriasPorMenu(menu);
         return ResponseEntity.ok(categorias);

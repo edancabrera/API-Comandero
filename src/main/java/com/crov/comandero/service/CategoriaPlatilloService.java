@@ -24,7 +24,7 @@ public class CategoriaPlatilloService {
     }
 
     public List<CategoriaPlatillo> listarCategoriasPorMenu(Menu menu){
-        return categoriaPlatilloRepository.findByMenuAndActivo(menu, true);
+        return categoriaPlatilloRepository.findByMenuAndActivoTrue(menu);
     }
 
     public List<Producto> obtenerProductosPorCategoria(Integer idCategoria) {
