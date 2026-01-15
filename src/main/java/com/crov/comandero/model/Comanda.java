@@ -1,6 +1,9 @@
 package com.crov.comandero.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
@@ -51,6 +54,10 @@ public class Comanda {
     @ManyToOne
     @JoinColumn(name = "id_comanda_principal")
     private Comanda comandaPrincipal;
+
+    @OneToMany(mappedBy = "comanda", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ComandaDetalle> detalles;
 
     //getters y setters
     public Integer getId() {
@@ -147,5 +154,13 @@ public class Comanda {
 
     public void setComandaPrincipal(Comanda comandaPrincipal) {
         this.comandaPrincipal = comandaPrincipal;
+    }
+
+    public List<ComandaDetalle> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<ComandaDetalle> detalles) {
+        this.detalles = detalles;
     }
 }
