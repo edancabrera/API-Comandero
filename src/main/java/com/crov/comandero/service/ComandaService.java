@@ -70,7 +70,7 @@ public class ComandaService {
             //detalle.setIva(producto.getImpuesto()); falta mapear la columna impuesto en producto y agregar el enum impuesto
             detalle.setPersona(d.getPersona());
             detalle.setComentario(d.getComentario());
-            detalle.setEstatusCocina(d.getEstatusCocina());
+            detalle.setEstatusCocina(1);
 
             comandaDetalleRepository.save(detalle);
         }
