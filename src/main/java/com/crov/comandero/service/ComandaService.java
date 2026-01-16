@@ -10,6 +10,7 @@ import com.crov.comandero.model.Comanda;
 import com.crov.comandero.model.ComandaDetalle;
 import com.crov.comandero.model.ComandaEstatus;
 import com.crov.comandero.model.Mesa;
+import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.model.Producto;
 import com.crov.comandero.model.Usuario;
 import com.crov.comandero.repository.ComandaDetalleRepository;
@@ -46,6 +47,9 @@ public class ComandaService {
         Mesa mesa = mesaRepository.findById(dto.getIdMesa()).orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
 
         Usuario mesero = usuarioRepository.findById(dto.getIdMesero()).orElseThrow(() -> new RuntimeException("Mesero no encontrado"));
+
+        mesa.setEstatus(MesaEstatus.OCUPADO);
+        mesaRepository.save(mesa);
 
         //Crear Comanda
         Comanda comanda = new Comanda();
