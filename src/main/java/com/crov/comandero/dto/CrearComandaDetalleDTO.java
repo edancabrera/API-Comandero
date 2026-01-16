@@ -3,16 +3,16 @@ package com.crov.comandero.dto;
 public class CrearComandaDetalleDTO {
     private Integer idPlatillo;
     private Integer cantidad;
-    private String comenatrio;
+    private String comentario;
     private Integer persona;
     private Integer estatusCocina;
     
     public CrearComandaDetalleDTO() {}
 
-    public CrearComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comenatrio, Integer persona, Integer estatusCocina) {
+    public CrearComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentario, Integer persona, Integer estatusCocina) {
         this.idPlatillo = idPlatillo;
         this.cantidad = cantidad;
-        this.comenatrio = comenatrio;
+        this.comentario = comentario;
         this.persona = persona;
         this.estatusCocina = estatusCocina;
     }
@@ -33,12 +33,12 @@ public class CrearComandaDetalleDTO {
         this.cantidad = cantidad;
     }
 
-    public String getComenatrio() {
-        return comenatrio;
+    public String getComentario() {
+        return comentario;
     }
 
-    public void setComenatrio(String comenatrio) {
-        this.comenatrio = comenatrio;
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
     public Integer getPersona() {
