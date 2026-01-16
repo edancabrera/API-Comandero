@@ -67,7 +67,7 @@ public class ComandaService {
             detalle.setCantidad(d.getCantidad());
             detalle.setPrecio(producto.getPrecio1());
             detalle.setCosto(producto.getCosto());
-            //detalle.setIva(producto.getImpuesto()); falta mapear la columna impuesto en producto y agregar el enum impuesto
+            detalle.setIva(producto.getImpuesto().getIva());
             detalle.setPersona(d.getPersona());
             detalle.setComentario(d.getComentario());
             detalle.setEstatusCocina(1);

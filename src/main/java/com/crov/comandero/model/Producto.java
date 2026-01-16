@@ -1,5 +1,7 @@
 package com.crov.comandero.model;
 
+import com.crov.comandero.model.converter.ImpuestoConverter;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -36,8 +38,8 @@ public class Producto {
     @Column(name = "platillo")
     private Boolean platillo;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "impuesto")
+    @Convert(converter = ImpuestoConverter.class)
     private Impuesto impuesto;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
