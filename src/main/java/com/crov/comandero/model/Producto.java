@@ -36,6 +36,10 @@ public class Producto {
     @Column(name = "platillo")
     private Boolean platillo;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "impuesto")
+    private Impuesto impuesto;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_categoria_platillo", nullable = false)
     private CategoriaPlatillo categoriaPlatillo;
@@ -118,5 +122,13 @@ public class Producto {
 
     public void setCategoriaPlatillo(CategoriaPlatillo categoriaPlatillo) {
         this.categoriaPlatillo = categoriaPlatillo;
+    }
+
+    public Impuesto getImpuesto() {
+        return impuesto;
+    }
+
+    public void setImpuesto(Impuesto impuesto) {
+        this.impuesto = impuesto;
     }
 }
