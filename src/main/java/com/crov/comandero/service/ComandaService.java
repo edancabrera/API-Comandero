@@ -73,7 +73,7 @@ public class ComandaService {
             detalle.setCosto(producto.getCosto());
             detalle.setIva(producto.getImpuesto().getIva());
             detalle.setPersona(d.getPersona());
-            detalle.setComentario(d.getComentario());
+            detalle.setComentarios(d.getComentarios());
             detalle.setEstatusCocina(1);
 
             comandaDetalleRepository.save(detalle);

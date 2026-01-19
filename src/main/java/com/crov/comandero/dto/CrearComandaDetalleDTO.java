@@ -3,15 +3,15 @@ package com.crov.comandero.dto;
 public class CrearComandaDetalleDTO {
     private Integer idPlatillo;
     private Integer cantidad;
-    private String comentario;
+    private String comentarios;
     private Integer persona;
     
     public CrearComandaDetalleDTO() {}
 
-    public CrearComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentario, Integer persona) {
+    public CrearComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentarios, Integer persona) {
         this.idPlatillo = idPlatillo;
         this.cantidad = cantidad;
-        this.comentario = comentario;
+        this.comentarios = comentarios;
         this.persona = persona;
     }
 
@@ -31,12 +31,12 @@ public class CrearComandaDetalleDTO {
         this.cantidad = cantidad;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getComentarios() {
+        return comentarios;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setComentario(String comentarios) {
+        this.comentarios = comentarios;
     }
 
     public Integer getPersona() {

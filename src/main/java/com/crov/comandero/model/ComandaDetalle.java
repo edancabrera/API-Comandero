@@ -39,7 +39,7 @@ public class ComandaDetalle {
     private Integer persona;
 
     @Column(name = "comentario")
-    private String comentario;
+    private String comentarios;
 
     //getters y setters
     public Integer getId() {
@@ -114,12 +114,12 @@ public class ComandaDetalle {
         this.persona = persona;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getComentarios() {
+        return comentarios;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
     
     
