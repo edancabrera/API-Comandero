@@ -1,6 +1,7 @@
 package com.crov.comandero.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -79,5 +80,32 @@ public class ComandaService {
             comandaDetalleRepository.save(detalle);
         }
         return comanda.getId();
+    }
+
+    public CrearComandaDTO obtenerComanda(Integer idComanda) {
+        Comanda comanda = comandaRepository.findById(idComanda).orElseThrow(() -> new RuntimeException("Comanda no encontrada"));
+
+        CrearComandaDTO response = new CrearComandaDTO();
+        response.setIdMesa(comanda.getMesa().getId());
+        response.setIdMesero(comanda.getMesero().getIdu());
+
+        List<CrearComandaDetalleDTO> detalles = comanda.getDetalles().stream().map(detalle -> {
+
+            Producto producto = detalle.getPlatillo();
+
+            CrearComandaDetalleDTO dto = new CrearComandaDetalleDTO();
+            dto.setIdPlatillo(producto.getIdProducto());
+            dto.setNombre(producto.getNombre());
+            dto.setCantidad(detalle.getCantidad());
+            dto.setPersona(detalle.getPersona());
+            dto.setComentarios(detalle.getComentarios());
+            dto.setIdCategoriaPlatillo(producto.getCategoriaPlatillo().getId());
+
+            return dto;
+        })
+        .toList();
+
+        response.setDetalles(detalles);
+        return response;
     }
 }
