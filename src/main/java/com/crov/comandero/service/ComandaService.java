@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.crov.comandero.dto.ComandaCursoDTO;
 import com.crov.comandero.dto.CrearComandaDTO;
 import com.crov.comandero.dto.CrearComandaDetalleDTO;
 import com.crov.comandero.model.Comanda;
@@ -107,5 +108,15 @@ public class ComandaService {
 
         response.setDetalles(detalles);
         return response;
+    }
+
+    public List<ComandaCursoDTO> obtenerComandasEnCurso(){
+        return comandaRepository.findByEstatus(ComandaEstatus.CURSO)
+                .stream()
+                .map(comanda -> new ComandaCursoDTO(
+                    comanda.getId(),
+                    comanda.getMesa().getId()
+                ))
+                .toList();
     }
 }
