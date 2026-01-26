@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.DescripcionMesaDTO;
 import com.crov.comandero.dto.MesaDTO;
+import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.service.MesaService;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -24,8 +26,11 @@ public class MesaController {
     }
 
     @GetMapping("/areas/{id}/mesas")
-    public ResponseEntity<List<MesaDTO>> listarMesasPorArea(@PathVariable Integer id) {
-        return ResponseEntity.ok(mesaService.obtenerMesasPorArea(id));
+    public ResponseEntity<List<MesaDTO>> listarMesasPorArea(@PathVariable Integer id, @RequestParam(required = false) MesaEstatus estatus) {
+        if (estatus == null){
+            return ResponseEntity.ok(mesaService.obtenerMesasPorArea(id));
+        }
+        return ResponseEntity.ok(mesaService.listarMesasPorEstatus(id, estatus));
     }
 
     @PutMapping("mesas/{id}/descripcion")

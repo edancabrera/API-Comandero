@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.crov.comandero.dto.MesaDTO;
 import com.crov.comandero.model.Mesa;
+import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.repository.MesaRepository;
 
 @Service
@@ -33,5 +34,19 @@ public class MesaService {
         Mesa mesa = mesaRepository.findById(idMesa).orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
         mesa.setNombre(descripcion);
         mesaRepository.save(mesa);
+    }
+
+
+    public List<MesaDTO> listarMesasPorEstatus(Integer idArea, MesaEstatus estatus){
+        return mesaRepository.findByAreaIdAndActivoTrueAndEstatus(idArea, estatus)
+        .stream()
+        .map(mesa -> new MesaDTO(
+            mesa.getId(),
+            mesa.getArea() != null ? mesa.getArea().getId() : null,
+            mesa.getNombre(),
+            mesa.getEstatus(),
+            mesa.getMesaPrincipal() != null ? mesa.getMesaPrincipal().getId() : null
+        ))
+        .toList();
     }
 }
