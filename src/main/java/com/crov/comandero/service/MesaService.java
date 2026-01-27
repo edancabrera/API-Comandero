@@ -49,4 +49,17 @@ public class MesaService {
         ))
         .toList();
     }
+
+    public List<MesaDTO> obtenerMesasPorMesaPrincipal(Integer mesaPrincipalId){
+        return mesaRepository.findByMesaPrincipal_IdAndActivoTrue(mesaPrincipalId)
+                .stream()
+                .map( mesa -> new MesaDTO(
+                    mesa.getId(),
+                    mesa.getArea() != null ? mesa.getArea().getId() : null,
+                    mesa.getNombre(),
+                    mesa.getEstatus(),
+                    mesa.getMesaPrincipal() != null ? mesa.getMesaPrincipal().getId() : null
+                ))
+                .toList();
+    }
 }

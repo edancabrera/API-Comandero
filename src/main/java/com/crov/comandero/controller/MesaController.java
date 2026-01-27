@@ -39,4 +39,10 @@ public class MesaController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/mesas/principal/{id}")
+    public ResponseEntity<List<MesaDTO>> listarMesasPorMesaPrincipal(@PathVariable Integer id) {
+        return ResponseEntity.ok(mesaService.obtenerMesasPorMesaPrincipal(id));
+    }
+    
 }
