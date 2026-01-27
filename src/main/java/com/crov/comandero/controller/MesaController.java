@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.DescripcionMesaDTO;
 import com.crov.comandero.dto.MesaDTO;
+import com.crov.comandero.dto.MesasIdsDTO;
 import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.service.MesaService;
 
@@ -43,6 +44,12 @@ public class MesaController {
     @GetMapping("/mesas/principal/{id}")
     public ResponseEntity<List<MesaDTO>> listarMesasPorMesaPrincipal(@PathVariable Integer id) {
         return ResponseEntity.ok(mesaService.obtenerMesasPorMesaPrincipal(id));
+    }
+
+    @PutMapping("/mesas/remover-mesa-principal")
+    public ResponseEntity<Void> removerMesaPrincipal(@RequestBody MesasIdsDTO dto) {
+        mesaService.removerMesaPrincipal(dto.getIds());
+        return ResponseEntity.noContent().build();
     }
     
 }

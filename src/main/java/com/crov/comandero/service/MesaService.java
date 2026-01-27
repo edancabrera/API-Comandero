@@ -9,6 +9,8 @@ import com.crov.comandero.model.Mesa;
 import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.repository.MesaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class MesaService {
     private final MesaRepository mesaRepository;
@@ -61,5 +63,11 @@ public class MesaService {
                     mesa.getMesaPrincipal() != null ? mesa.getMesaPrincipal().getId() : null
                 ))
                 .toList();
+    }
+
+    @Transactional
+    public void removerMesaPrincipal(List<Integer> mesaIds){
+        if(mesaIds == null || mesaIds.isEmpty()){ return; }
+        mesaRepository.removerMesaPrincipal(mesaIds, MesaEstatus.DISPONIBLE);
     }
 }
