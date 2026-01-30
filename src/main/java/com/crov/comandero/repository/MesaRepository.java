@@ -22,4 +22,13 @@ public interface MesaRepository extends JpaRepository<Mesa, Integer>{
             WHERE m.id IN :ids
             """)
     int removerMesaPrincipal(List<Integer> ids, MesaEstatus estatus);
+
+    @Modifying(clearAutomatically = true)
+    @Query("""
+            UPDATE Mesa m
+            SET m.mesaPrincipal = :mesaPrincipal,
+                m.estatus = :estatus
+            WHERE m.id IN :ids
+            """)
+    int agregarMesaPrincipal(Mesa mesaPrincipal, List<Integer> ids, MesaEstatus estatus);
 }

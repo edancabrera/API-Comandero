@@ -52,4 +52,9 @@ public class MesaController {
         return ResponseEntity.noContent().build();
     }
     
+    @PutMapping("/mesas/{id}/unir")
+    public ResponseEntity<Void> unirMesas(@PathVariable Integer id, @RequestBody MesasIdsDTO dto) {
+        mesaService.agregarMesaPrincipal(id, dto.getIds());
+        return ResponseEntity.noContent().build();
+    }
 }

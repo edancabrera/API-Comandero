@@ -70,4 +70,11 @@ public class MesaService {
         if(mesaIds == null || mesaIds.isEmpty()){ return; }
         mesaRepository.removerMesaPrincipal(mesaIds, MesaEstatus.DISPONIBLE);
     }
+
+    @Transactional
+    public void agregarMesaPrincipal(Integer mesaPrincipalId, List<Integer> mesasIds){
+        Mesa mesaPrincipal = mesaRepository.findById(mesaPrincipalId).orElseThrow(()-> new RuntimeException("Mesa principal no encontrada"));
+
+        mesaRepository.agregarMesaPrincipal(mesaPrincipal, mesasIds, MesaEstatus.UNIDA);
+    }
 }
