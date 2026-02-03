@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.ComandaCursoDTO;
 import com.crov.comandero.dto.CrearComandaDTO;
+import com.crov.comandero.dto.ObtenerComandaDTO;
 import com.crov.comandero.service.ComandaService;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class ComandaController {
     }
 
     @GetMapping("/comanda/{id}")
-    public ResponseEntity<CrearComandaDTO> obtenerComanda(@PathVariable Integer id) {
+    public ResponseEntity<ObtenerComandaDTO> obtenerComanda(@PathVariable Integer id) {
         return ResponseEntity.ok(comandaService.obtenerComanda(id));
     }
 

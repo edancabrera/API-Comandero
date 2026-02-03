@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.crov.comandero.dto.ComandaCursoDTO;
 import com.crov.comandero.dto.CrearComandaDTO;
 import com.crov.comandero.dto.CrearComandaDetalleDTO;
+import com.crov.comandero.dto.ObtenerComandaDTO;
+import com.crov.comandero.dto.ObtenerComandaDetalleDTO;
 import com.crov.comandero.model.Comanda;
 import com.crov.comandero.model.ComandaDetalle;
 import com.crov.comandero.model.ComandaEstatus;
@@ -83,30 +85,36 @@ public class ComandaService {
         return comanda.getId();
     }
 
-    public CrearComandaDTO obtenerComanda(Integer idComanda) {
+    public ObtenerComandaDTO obtenerComanda(Integer idComanda) {
         Comanda comanda = comandaRepository.findById(idComanda).orElseThrow(() -> new RuntimeException("Comanda no encontrada"));
 
-        CrearComandaDTO response = new CrearComandaDTO();
+        ObtenerComandaDTO response = new ObtenerComandaDTO();
         response.setIdMesa(comanda.getMesa().getId());
         response.setIdMesero(comanda.getMesero().getIdu());
 
-        List<CrearComandaDetalleDTO> detalles = comanda.getDetalles().stream().map(detalle -> {
+        List<ObtenerComandaDetalleDTO> detalles = comanda.getDetalles().stream().map(detalle -> {
 
             Producto producto = detalle.getPlatillo();
 
-            CrearComandaDetalleDTO dto = new CrearComandaDetalleDTO();
+            ObtenerComandaDetalleDTO dto = new ObtenerComandaDetalleDTO();
             dto.setIdPlatillo(producto.getIdProducto());
             dto.setNombre(producto.getNombre());
             dto.setCantidad(detalle.getCantidad());
             dto.setPersona(detalle.getPersona());
             dto.setComentarios(detalle.getComentarios());
             dto.setIdCategoriaPlatillo(producto.getCategoriaPlatillo().getId());
+            dto.setPrecio(detalle.getPrecio());
 
             return dto;
         })
         .toList();
 
+        double total = comanda.getDetalles().stream()
+        .mapToDouble(d -> d.getCantidad() * d.getPrecio())
+        .sum();
+        
         response.setDetalles(detalles);
+        response.setTotal(total);
         return response;
     }
 
