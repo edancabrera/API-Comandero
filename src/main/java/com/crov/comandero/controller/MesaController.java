@@ -2,6 +2,7 @@ package com.crov.comandero.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crov.comandero.dto.CambiarMesaDTO;
 import com.crov.comandero.dto.DescripcionMesaDTO;
 import com.crov.comandero.dto.MesaDTO;
 import com.crov.comandero.dto.MesasIdsDTO;
@@ -56,5 +57,14 @@ public class MesaController {
     public ResponseEntity<Void> unirMesas(@PathVariable Integer id, @RequestBody MesasIdsDTO dto) {
         mesaService.agregarMesaPrincipal(id, dto.getIds());
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/mesas/cambiar-mesa")
+    public ResponseEntity<Void> cambiarMesa(@RequestBody CambiarMesaDTO dto) {
+        mesaService.cambiarComandaDeMesa(
+            dto.getIdMesaOrigen(), 
+            dto.getIdMesaDestino()
+        );
+        return ResponseEntity.ok().build();
     }
 }
