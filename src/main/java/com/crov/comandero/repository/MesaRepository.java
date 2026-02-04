@@ -33,4 +33,6 @@ public interface MesaRepository extends JpaRepository<Mesa, Integer>{
     int agregarMesaPrincipal(Mesa mesaPrincipal, List<Integer> ids, MesaEstatus estatus);
 
     boolean existsByMesaPrincipalId(Integer idMesaPrincipal);
+
+    List<Mesa> findByMesaPrincipal(Integer idMesaPrincipal);
 }

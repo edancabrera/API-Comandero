@@ -145,4 +145,32 @@ public class ComandaService {
             
             return dto;
     }
+
+    @Transactional
+    public void cancelarComanda(Integer idMesa, Integer idUsuario) {
+        Comanda comanda = comandaRepository
+            .findByMesaIdAndEstatus(idMesa, ComandaEstatus.CURSO)
+            .orElseThrow(() -> new RuntimeException("No hay comanda activa para cancelar"));
+        
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        comanda.setEstatus(ComandaEstatus.CANCELADO);
+        comanda.setUsuarioCancelado(usuario);
+        comanda.setFechaCancelacion(LocalDateTime.now());
+
+        comandaRepository.save(comanda);
+
+        Mesa mesa = comanda.getMesa();
+        mesa.setEstatus(MesaEstatus.DISPONIBLE);
+        mesaRepository.save(mesa);
+
+        //Cambiar el estatus y mesa principal de las mesas unidas, si es que existen
+        List<Mesa> mesasUnidas = mesaRepository
+            .findByMesaPrincipal(mesa.getId());
+        for(Mesa m : mesasUnidas) {
+            m.setEstatus(MesaEstatus.DISPONIBLE);
+            mesa.setMesaPrincipal(null);
+        }
+    }
 }

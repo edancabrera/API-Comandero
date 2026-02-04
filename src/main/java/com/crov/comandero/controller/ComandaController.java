@@ -32,5 +32,11 @@ public class ComandaController {
     public ResponseEntity<ObtenerComandaDTO> obtenerComandaPorMesa(@PathVariable Integer idMesa) {
         return ResponseEntity.ok(comandaService.obtenerComandaActivaPorMesa(idMesa));
     }
+
+    @PostMapping("/comanda/mesa/{idMesa}/cancelar/{idUsuario}")
+    public ResponseEntity<Void> postMethodName(@PathVariable Integer idMesa, @PathVariable Integer idUsuario) {
+        comandaService.cancelarComanda(idMesa, idUsuario);
+        return ResponseEntity.ok().build();
+    }
     
 }
