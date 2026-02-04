@@ -167,10 +167,11 @@ public class ComandaService {
 
         //Cambiar el estatus y mesa principal de las mesas unidas, si es que existen
         List<Mesa> mesasUnidas = mesaRepository
-            .findByMesaPrincipal(mesa.getId());
+            .findByMesaPrincipal_IdAndActivoTrue(mesa.getId());
         for(Mesa m : mesasUnidas) {
             m.setEstatus(MesaEstatus.DISPONIBLE);
-            mesa.setMesaPrincipal(null);
+            m.setMesaPrincipal(null);
         }
+        mesaRepository.saveAll(mesasUnidas);
     }
 }
