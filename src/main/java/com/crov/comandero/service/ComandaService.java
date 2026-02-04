@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.crov.comandero.dto.ComandaCursoDTO;
 import com.crov.comandero.dto.CrearComandaDTO;
 import com.crov.comandero.dto.CrearComandaDetalleDTO;
 import com.crov.comandero.dto.ObtenerComandaDTO;
@@ -85,46 +84,40 @@ public class ComandaService {
         return comanda.getId();
     }
 
-    public ObtenerComandaDTO obtenerComanda(Integer idComanda) {
-        Comanda comanda = comandaRepository.findById(idComanda).orElseThrow(() -> new RuntimeException("Comanda no encontrada"));
-
-        ObtenerComandaDTO response = new ObtenerComandaDTO();
-        response.setIdMesa(comanda.getMesa().getId());
-        response.setIdMesero(comanda.getMesero().getIdu());
-
-        List<ObtenerComandaDetalleDTO> detalles = comanda.getDetalles().stream().map(detalle -> {
-
-            Producto producto = detalle.getPlatillo();
-
-            ObtenerComandaDetalleDTO dto = new ObtenerComandaDetalleDTO();
-            dto.setIdPlatillo(producto.getIdProducto());
-            dto.setNombre(producto.getNombre());
-            dto.setCantidad(detalle.getCantidad());
-            dto.setPersona(detalle.getPersona());
-            dto.setComentarios(detalle.getComentarios());
-            dto.setIdCategoriaPlatillo(producto.getCategoriaPlatillo().getId());
-            dto.setPrecio(detalle.getPrecio());
-
-            return dto;
-        })
-        .toList();
-
-        double total = comanda.getDetalles().stream()
-        .mapToDouble(d -> d.getCantidad() * d.getPrecio())
-        .sum();
+    public ObtenerComandaDTO obtenerComandaActivaPorMesa(Integer idMesa) {
+        Comanda comanda = comandaRepository
+                .findByMesaIdAndEstatus(idMesa, ComandaEstatus.CURSO)
+                .orElseThrow(() -> new RuntimeException("La mesa no tiene comanda activa"));
         
-        response.setDetalles(detalles);
-        response.setTotal(total);
-        return response;
-    }
+        ObtenerComandaDTO dto = new ObtenerComandaDTO();
+        dto.setIdMesa(comanda.getMesa().getId());
+        dto.setIdMesero(comanda.getMesero().getIdu());
 
-    public List<ComandaCursoDTO> obtenerComandasEnCurso(){
-        return comandaRepository.findByEstatus(ComandaEstatus.CURSO)
+        double total = 0;
+
+        List<ObtenerComandaDetalleDTO> detalles = comanda.getDetalles()
+            .stream()
+            .map( detalle -> {
+                ObtenerComandaDetalleDTO  d = new ObtenerComandaDetalleDTO();
+                d.setIdPlatillo(detalle.getPlatillo().getIdProducto());
+                d.setNombre(detalle.getPlatillo().getNombre());
+                d.setCantidad(detalle.getCantidad());
+                d.setPersona(detalle.getPersona());
+                d.setComentarios(detalle.getComentarios());
+                d.setIdCategoriaPlatillo(detalle.getPlatillo().getCategoriaPlatillo().getId());
+                d.setPrecio(detalle.getPrecio());
+                return d;
+            })
+            .toList();
+
+            total = comanda.getDetalles()
                 .stream()
-                .map(comanda -> new ComandaCursoDTO(
-                    comanda.getId(),
-                    comanda.getMesa().getId()
-                ))
-                .toList();
+                .mapToDouble(d -> d.getCantidad() * d.getPrecio())
+                .sum();
+            
+            dto.setDetalles(detalles);
+            dto.setTotal(total);
+            
+            return dto;
     }
 }
