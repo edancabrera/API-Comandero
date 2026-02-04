@@ -23,8 +23,8 @@ public class ComandaController {
     }
 
     @PostMapping("/comanda")
-    public ResponseEntity<Integer> crearComanda(@RequestBody CrearComandaDTO dto) {
-        Integer idComanda = comandaService.crearComanda(dto);
+    public ResponseEntity<Integer> crearOActualizarComanda(@RequestBody CrearComandaDTO dto) {
+        Integer idComanda = comandaService.crearOActualizarComanda(dto);
         return ResponseEntity.ok(idComanda);
     }
 

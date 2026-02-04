@@ -46,40 +46,63 @@ public class ComandaService {
     }
     
     @Transactional
-    public Integer crearComanda(CrearComandaDTO dto){
+    public Integer crearOActualizarComanda(CrearComandaDTO dto){
         Mesa mesa = mesaRepository.findById(dto.getIdMesa()).orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
 
         Usuario mesero = usuarioRepository.findById(dto.getIdMesero()).orElseThrow(() -> new RuntimeException("Mesero no encontrado"));
 
-        mesa.setEstatus(MesaEstatus.OCUPADO);
-        mesaRepository.save(mesa);
+        //Buscar comanda activa
+        Comanda comanda = comandaRepository
+            .findByMesaIdAndEstatus(mesa.getId(), ComandaEstatus.CURSO)
+            .orElse(null);
+        
+        //Crearla comanda sino existe
+        if(comanda == null) {
+            mesa.setEstatus(MesaEstatus.OCUPADO);
+            mesaRepository.save(mesa);
 
-        //Crear Comanda
-        Comanda comanda = new Comanda();
-        comanda.setMesa(mesa);
-        comanda.setMesero(mesero);
-        comanda.setFechaCreacion(LocalDateTime.now());
-        comanda.setEstatus(ComandaEstatus.CURSO);
-        comanda.setActivo(true);
+            //Crear Comanda
+            comanda = new Comanda();
+            comanda.setMesa(mesa);
+            comanda.setMesero(mesero);
+            comanda.setFechaCreacion(LocalDateTime.now());
+            comanda.setEstatus(ComandaEstatus.CURSO);
+            comanda.setActivo(true);
 
-        comanda = comandaRepository.save(comanda);
+            comanda = comandaRepository.save(comanda);
+        }
+
+        
 
         //Crear detalles
         for(CrearComandaDetalleDTO d : dto.getDetalles()) {
             Producto producto = productoRepository.findById(d.getIdPlatillo()).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-            ComandaDetalle detalle = new ComandaDetalle();
-            detalle.setComanda(comanda);
-            detalle.setPlatillo(producto);
-            detalle.setCantidad(d.getCantidad());
-            detalle.setPrecio(producto.getPrecio1());
-            detalle.setCosto(producto.getCosto());
-            detalle.setIva(producto.getImpuesto().getIva());
-            detalle.setPersona(d.getPersona());
-            detalle.setComentarios(d.getComentarios());
-            detalle.setEstatusCocina(1);
+            //Verificar si ya existe el platillo en la comanda
+            ComandaDetalle detalleExistente = comandaDetalleRepository
+                .findByComandaIdAndPlatilloIdProductoAndPersona(
+                    comanda.getId(),
+                    producto.getIdProducto(),
+                    d.getPersona()
+                ). orElse(null);
+            
+            if(detalleExistente != null) {
+                detalleExistente.setCantidad(d.getCantidad());
+                comandaDetalleRepository.save(detalleExistente);
+            } else {
+                ComandaDetalle detalle = new ComandaDetalle();
+                detalle.setComanda(comanda);
+                detalle.setPlatillo(producto);
+                detalle.setCantidad(d.getCantidad());
+                detalle.setPrecio(producto.getPrecio1());
+                detalle.setCosto(producto.getCosto());
+                detalle.setIva(producto.getImpuesto().getIva());
+                detalle.setPersona(d.getPersona());
+                detalle.setComentarios(d.getComentarios());
+                detalle.setEstatusCocina(1);
 
-            comandaDetalleRepository.save(detalle);
+                comandaDetalleRepository.save(detalle);
+            }
         }
         return comanda.getId();
     }
