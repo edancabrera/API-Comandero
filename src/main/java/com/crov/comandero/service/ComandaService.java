@@ -88,6 +88,7 @@ public class ComandaService {
             
             if(detalleExistente != null) {
                 detalleExistente.setCantidad(d.getCantidad());
+                detalleExistente.setComentarios(d.getComentarios());
                 comandaDetalleRepository.save(detalleExistente);
             } else {
                 ComandaDetalle detalle = new ComandaDetalle();
