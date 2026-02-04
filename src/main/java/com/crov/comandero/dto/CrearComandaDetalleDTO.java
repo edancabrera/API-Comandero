@@ -5,14 +5,16 @@ public class CrearComandaDetalleDTO {
     private Integer cantidad;
     private String comentarios;
     private Integer persona;
+    private Integer estatusCocina;
     
     public CrearComandaDetalleDTO() {}
 
-    public CrearComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentarios, Integer persona, Integer idCategoriaPlatillo, String nombre) {
+    public CrearComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentarios, Integer persona, Integer idCategoriaPlatillo, String nombre, Integer estatusCocina) {
         this.idPlatillo = idPlatillo;
         this.cantidad = cantidad;
         this.comentarios = comentarios;
         this.persona = persona;
+        this.estatusCocina = estatusCocina;
     }
 
     public Integer getIdPlatillo() {
@@ -45,5 +47,13 @@ public class CrearComandaDetalleDTO {
 
     public void setPersona(Integer persona) {
         this.persona = persona;
+    }
+
+    public Integer getEstatusCocina() {
+        return estatusCocina;
+    }
+
+    public void setEstatusCocina(Integer estatusCocina) {
+        this.estatusCocina = estatusCocina;
     }
 }

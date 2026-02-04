@@ -106,6 +106,7 @@ public class ComandaService {
                 d.setComentarios(detalle.getComentarios());
                 d.setIdCategoriaPlatillo(detalle.getPlatillo().getCategoriaPlatillo().getId());
                 d.setPrecio(detalle.getPrecio());
+                d.setEstatusCocina(detalle.getEstatusCocina());
                 return d;
             })
             .toList();

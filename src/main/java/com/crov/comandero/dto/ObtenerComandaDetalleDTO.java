@@ -8,11 +8,12 @@ public class ObtenerComandaDetalleDTO {
     private Integer idCategoriaPlatillo;
     private String nombre;
     private Double precio;
+    private Integer estatusCocina;
 
     public ObtenerComandaDetalleDTO() {}
     
     public ObtenerComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentarios, Integer persona,
-            Integer idCategoriaPlatillo, String nombre, Double precio) {
+            Integer idCategoriaPlatillo, String nombre, Double precio, Integer estatusCocina) {
         this.idPlatillo = idPlatillo;
         this.cantidad = cantidad;
         this.comentarios = comentarios;
@@ -20,6 +21,7 @@ public class ObtenerComandaDetalleDTO {
         this.idCategoriaPlatillo = idCategoriaPlatillo;
         this.nombre = nombre;
         this.precio = precio;
+        this.estatusCocina = estatusCocina;
     }
 
     public Integer getIdPlatillo() {
@@ -76,6 +78,14 @@ public class ObtenerComandaDetalleDTO {
 
     public void setPrecio(Double precio) {
         this.precio = precio;
+    }
+
+    public Integer getEstatusCocina() {
+        return estatusCocina;
+    }
+
+    public void setEstatusCocina(Integer estatusCocina) {
+        this.estatusCocina = estatusCocina;
     }
     
 
