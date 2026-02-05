@@ -1,6 +1,8 @@
 package com.crov.comandero.dto;
 
 public class ObtenerComandaDetalleDTO {
+    private Integer id;
+    private Integer idComanda;
     private Integer idPlatillo;
     private Integer cantidad;
     private String comentarios;
@@ -12,8 +14,10 @@ public class ObtenerComandaDetalleDTO {
 
     public ObtenerComandaDetalleDTO() {}
     
-    public ObtenerComandaDetalleDTO(Integer idPlatillo, Integer cantidad, String comentarios, Integer persona,
+    public ObtenerComandaDetalleDTO(Integer id, Integer idComanda, Integer idPlatillo, Integer cantidad, String comentarios, Integer persona,
             Integer idCategoriaPlatillo, String nombre, Double precio, Integer estatusCocina) {
+        this.id = id;
+        this.idComanda = idComanda;
         this.idPlatillo = idPlatillo;
         this.cantidad = cantidad;
         this.comentarios = comentarios;
@@ -22,6 +26,22 @@ public class ObtenerComandaDetalleDTO {
         this.nombre = nombre;
         this.precio = precio;
         this.estatusCocina = estatusCocina;
+    }
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getIdComanda() {
+        return idComanda;
+    }
+
+    public void setIdComanda(Integer idComanda) {
+        this.idComanda = idComanda;
     }
 
     public Integer getIdPlatillo() {

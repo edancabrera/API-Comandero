@@ -123,6 +123,8 @@ public class ComandaService {
             .stream()
             .map( detalle -> {
                 ObtenerComandaDetalleDTO  d = new ObtenerComandaDetalleDTO();
+                d.setId(detalle.getId());
+                d.setIdComanda(detalle.getComanda().getId());
                 d.setIdPlatillo(detalle.getPlatillo().getIdProducto());
                 d.setNombre(detalle.getPlatillo().getNombre());
                 d.setCantidad(detalle.getCantidad());
