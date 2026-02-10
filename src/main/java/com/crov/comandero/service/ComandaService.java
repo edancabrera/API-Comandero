@@ -176,4 +176,12 @@ public class ComandaService {
         }
         mesaRepository.saveAll(mesasUnidas);
     }
+
+    @Transactional
+    public void eliminarDetalles(List<Integer> idsDetalles) {
+        List<ComandaDetalle> detalles = comandaDetalleRepository.findAllById(idsDetalles);
+        if(!detalles.isEmpty()) {
+            comandaDetalleRepository.deleteAll(detalles);
+        }
+    }
 }

@@ -6,10 +6,12 @@ import com.crov.comandero.dto.CrearComandaDTO;
 import com.crov.comandero.dto.ObtenerComandaDTO;
 import com.crov.comandero.service.ComandaService;
 
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -36,6 +38,12 @@ public class ComandaController {
     @PostMapping("/comanda/mesa/{idMesa}/cancelar/{idUsuario}")
     public ResponseEntity<Void> postMethodName(@PathVariable Integer idMesa, @PathVariable Integer idUsuario) {
         comandaService.cancelarComanda(idMesa, idUsuario);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/comanda/detalle")
+    public ResponseEntity<Void> eliminarDetalles(@RequestBody List<Integer> idsDetalles) {
+        comandaService.eliminarDetalles(idsDetalles);
         return ResponseEntity.ok().build();
     }
     
