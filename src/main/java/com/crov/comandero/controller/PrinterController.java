@@ -1,7 +1,6 @@
 package com.crov.comandero.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.PrinterRequestDTO;
@@ -11,13 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/print")
 public class PrinterController {
 
     @Autowired
     private PrinterService printerService;
 
-    @PostMapping
+    @PostMapping("/print")
     public String print(@RequestBody PrinterRequestDTO dto) {
         try {
             printerService.print(dto.getPrinterName(), dto.getContent());
