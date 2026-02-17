@@ -15,21 +15,28 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class PrinterService {
 
-    public void print(String content) throws PrintException {
-				
-				//Conversión del texto a bytes
-        byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
-        
-        //Búsqueda de la impresora por defecto del sistema
-        PrintService printer = PrintServiceLookup.lookupDefaultPrintService();
+    public void print(String printerName, String content) throws PrintException {
+        PrintService printer = findPrinter(printerName);
         if(printer == null){
-	        throw new RuntimeException("No hay impresora configurada");
+            throw new RuntimeException("No se encontró la impresora: " + printerName);
         }
+
+        byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
 
         DocPrintJob job = printer.createPrintJob();
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         Doc doc = new SimpleDoc(bytes, flavor, null);
 
         job.print(doc, null);
+    }
+
+    private PrintService findPrinter(String printerName){
+        PrintService[] printers = PrintServiceLookup.lookupPrintServices(null, null);
+        for(PrintService printer : printers){
+            if(printer.getName().equalsIgnoreCase(printerName)){
+                return printer;
+            }
+        }
+        return null;
     }
 }
