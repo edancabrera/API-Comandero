@@ -39,7 +39,9 @@ public class CategoriaPlatilloService {
                     platillo.getIdProducto(),
                     platillo.getNombre(),
                     platillo.getPrecio1(),
-                    platillo.getCategoriaPlatillo() != null ? platillo.getCategoriaPlatillo().getId() : null
+                    platillo.getCategoriaPlatillo() != null ? platillo.getCategoriaPlatillo().getId() : null,
+                    platillo.getCategoriaPlatillo().getNombre(),
+                    platillo.getCategoriaPlatillo().getMenu()
                 ))
                 .toList();
         
