@@ -1,5 +1,7 @@
 package com.crov.comandero.dto;
 
+import com.crov.comandero.model.Menu;
+
 public class ObtenerComandaDetalleDTO {
     private Integer id;
     private Integer idComanda;
@@ -11,11 +13,12 @@ public class ObtenerComandaDetalleDTO {
     private String nombre;
     private Double precio;
     private Integer estatusCocina;
+    private String nombreCategoria;
+    private Menu menu;
 
     public ObtenerComandaDetalleDTO() {}
     
-    public ObtenerComandaDetalleDTO(Integer id, Integer idComanda, Integer idPlatillo, Integer cantidad, String comentarios, Integer persona,
-            Integer idCategoriaPlatillo, String nombre, Double precio, Integer estatusCocina) {
+    public ObtenerComandaDetalleDTO(Integer id, Integer idComanda, Integer idPlatillo, Integer cantidad, String comentarios, Integer persona, Integer idCategoriaPlatillo, String nombre, Double precio, Integer estatusCocina, String nombreCategoria, Menu menu) {
         this.id = id;
         this.idComanda = idComanda;
         this.idPlatillo = idPlatillo;
@@ -26,6 +29,8 @@ public class ObtenerComandaDetalleDTO {
         this.nombre = nombre;
         this.precio = precio;
         this.estatusCocina = estatusCocina;
+        this.nombreCategoria = nombreCategoria;
+        this.menu = menu;
     }
     
     public Integer getId() {
@@ -106,6 +111,22 @@ public class ObtenerComandaDetalleDTO {
 
     public void setEstatusCocina(Integer estatusCocina) {
         this.estatusCocina = estatusCocina;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
     
 
