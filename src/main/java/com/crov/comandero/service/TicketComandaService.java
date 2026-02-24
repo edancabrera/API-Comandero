@@ -4,17 +4,24 @@ import org.springframework.stereotype.Service;
 
 import com.crov.comandero.dto.TicketComandaDTO;
 import com.crov.comandero.dto.TicketComandaDetalleDTO;
+import com.crov.comandero.model.Parametros;
+import com.crov.comandero.repository.ParametrosRepository;
 
 @Service
 public class TicketComandaService {
 
     private final PrinterService printerService;
+    private final ParametrosRepository parametrosRepository;
 
-    public TicketComandaService(PrinterService printerService){
+    public TicketComandaService(PrinterService printerService, ParametrosRepository parametrosRepository){
         this.printerService = printerService;
+        this.parametrosRepository = parametrosRepository;
     }
     
     public void generarEImprimir(TicketComandaDTO dto){
+
+        Parametros parametros = parametrosRepository.findById(1).orElseThrow(() -> new RuntimeException("No se encontraron parámetros"));
+
         dto.getDetalle().forEach((menu, personasMap) -> {
             StringBuilder ticket = new StringBuilder();
 
@@ -41,30 +48,25 @@ public class TicketComandaService {
                 }
                 ticket.append("----------------------------\n");
             });
-            //Mandar a imprimir
-            enviarAImpresora(menu, ticket.toString());
+
+            String nombreImpresora = obtenerImpresoraSegunMenu(menu, parametros);
+
+            try {
+                printerService.print(nombreImpresora, ticket.toString());
+            } catch (Exception e) {
+                throw new RuntimeException("Error al imprimir en "+ nombreImpresora, e);
+            }
         });
     }
 
-    private void enviarAImpresora(String menu, String contenido) {
-        String printerName;
+    private String obtenerImpresoraSegunMenu(String menu, Parametros parametros) {
 
-        switch (menu) {
-            case "COMIDA":
-                printerName = "Generic / Text Only";
-                break;
+        switch (menu.toUpperCase()) {
             case "BEBIDA":
-                printerName = "Generic / Text Only";
-                break;
+                return parametros.getImpresoraBar();
         
             default:
-                printerName = "Generic / Text Only";
-        }
-        
-        try {
-            printerService.print(printerName, contenido);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al imprimir en "+ printerName, e);
+                return parametros.getImpresoraCocina();
         }
     }
 }
