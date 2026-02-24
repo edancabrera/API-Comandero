@@ -7,6 +7,12 @@ import com.crov.comandero.dto.TicketComandaDetalleDTO;
 
 @Service
 public class TicketComandaService {
+
+    private final PrinterService printerService;
+
+    public TicketComandaService(PrinterService printerService){
+        this.printerService = printerService;
+    }
     
     public void generarEImprimir(TicketComandaDTO dto){
         dto.getDetalle().forEach((menu, personasMap) -> {
@@ -36,22 +42,29 @@ public class TicketComandaService {
                 ticket.append("----------------------------\n");
             });
             //Mandar a imprimir
-            imprimirPorMenu(menu, ticket.toString());
+            enviarAImpresora(menu, ticket.toString());
         });
     }
 
-    private void imprimirPorMenu(String menu, String contenido) {
+    private void enviarAImpresora(String menu, String contenido) {
+        String printerName;
+
         switch (menu) {
             case "COMIDA":
-                System.out.println("Enviando a impresora de cocina");
+                printerName = "Generic / Text Only";
                 break;
             case "BEBIDA":
-                System.out.println("Enviando a impresora de barra");
+                printerName = "Generic / Text Only";
                 break;
         
             default:
-                System.out.println("Enviando a impresora de cocina");
+                printerName = "Generic / Text Only";
         }
-        System.out.println(contenido);
+        
+        try {
+            printerService.print(printerName, contenido);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al imprimir en "+ printerName, e);
+        }
     }
 }
