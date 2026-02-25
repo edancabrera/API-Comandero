@@ -24,6 +24,31 @@ public class TicketFormatter {
 
     }
 
+    public String lineThreeText(String left, String center, String right)
+    {
+        if (left == null) left = "";
+        if (center == null) center = "";
+        if (right == null) right = "";
+
+        int totalTextLenght = left.length() + center.length() + right.length();
+
+        if(totalTextLenght >= lineWidth) {
+            return wrapText(left + " " + center + " " + right);
+        }
+
+        int remainingSpaces = lineWidth - totalTextLenght;
+
+        int spaceLeftCenter = remainingSpaces / 2;
+        int spaceCenterRight = remainingSpaces - spaceLeftCenter;
+
+        return left
+            + " ".repeat(spaceLeftCenter)
+            + center
+            + " ".repeat(spaceCenterRight)
+            + right
+            + "\n";
+    }
+
     public String wrapText(String text) {
          if (text == null || text.isBlank()) return "\n";
 

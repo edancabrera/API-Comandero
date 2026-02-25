@@ -42,10 +42,18 @@ public class TicketComandaService {
                 boolean esCancelacion = "CANCELACION".equalsIgnoreCase(dto.getTipo());
 
                 for(TicketComandaDetalleDTO d: detalles){
-                    if(esCancelacion){ticket.append("CANCELADO -> ");}
-                    ticket.append(fmt.wrapText(d.getCantidad() + " " + d.getNombre()));
-                    if(d.getComentarios() != null && !d.getComentarios().isBlank()){
-                        ticket.append(fmt.wrapText("Comentarios: " + d.getComentarios()));
+                    if(esCancelacion){
+                        ticket.append(fmt.lineThreeText(
+                            "CANCELADO ->",
+                            d.getCantidad().toString(),
+                            d.getNombre()
+                        ));
+                    } else {
+                        ticket.append(fmt.wrapText(d.getCantidad() + " " + d.getNombre()));
+
+                        if(d.getComentarios() != null && !d.getComentarios().isBlank()){
+                            ticket.append(fmt.wrapText("Comentarios: " + d.getComentarios()));
+                        }
                     }
                 }
                 ticket.append(fmt.lineSeparator('-'));
