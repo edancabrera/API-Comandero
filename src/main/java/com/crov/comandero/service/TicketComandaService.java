@@ -34,8 +34,10 @@ public class TicketComandaService {
 
             personasMap.forEach((persona, detalles) -> {
                 ticket.append("Persona: ").append(persona).append("\n");
+                boolean esCancelacion = "CANCELACION".equalsIgnoreCase(dto.getTipo());
 
                 for(TicketComandaDetalleDTO d: detalles){
+                    if(esCancelacion){ticket.append("CANCELADO -> ");}
                     ticket.append(d.getCantidad())
                           .append(" ")
                           .append(d.getNombre())
