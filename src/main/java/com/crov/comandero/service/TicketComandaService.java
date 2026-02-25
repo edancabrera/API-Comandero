@@ -6,6 +6,7 @@ import com.crov.comandero.dto.TicketComandaDTO;
 import com.crov.comandero.dto.TicketComandaDetalleDTO;
 import com.crov.comandero.model.Parametros;
 import com.crov.comandero.repository.ParametrosRepository;
+import com.crov.comandero.util.TicketFormatter;
 
 @Service
 public class TicketComandaService {
@@ -23,32 +24,31 @@ public class TicketComandaService {
         Parametros parametros = parametrosRepository.findById(1).orElseThrow(() -> new RuntimeException("No se encontraron parámetros"));
 
         dto.getDetalle().forEach((menu, personasMap) -> {
+            int papel = obtenerTamanoPapel(menu, parametros);
+            TicketFormatter fmt = new TicketFormatter(papel);
+            
             StringBuilder ticket = new StringBuilder();
 
-            ticket.append("Mesero: ").append(dto.getMesero()).append("\n");
-            ticket.append("=================================\n");
-            ticket.append("Mesa: ").append(dto.getMesa()).append("\n");
-            ticket.append("=================================\n");
-            ticket.append("Fecha: ").append(dto.getFecha()).append("\n");
-            ticket.append("=================================\n");
+            ticket.append(fmt.lineTextRight("Mesero:", dto.getMesero()));
+            ticket.append(fmt.lineSeparator('='));
+            ticket.append(fmt.lineTextRight("Mesa:", dto.getMesa()));
+            ticket.append(fmt.lineSeparator('='));
+            ticket.append(fmt.lineTextRight("Fecha:", dto.getFecha().toString()));
+            ticket.append(fmt.lineSeparator('='));
 
             personasMap.forEach((persona, detalles) -> {
-                ticket.append("Persona: ").append(persona).append("\n");
+                ticket.append("PERSONA: " + persona + "\n");
+
                 boolean esCancelacion = "CANCELACION".equalsIgnoreCase(dto.getTipo());
 
                 for(TicketComandaDetalleDTO d: detalles){
                     if(esCancelacion){ticket.append("CANCELADO -> ");}
-                    ticket.append(d.getCantidad())
-                          .append(" ")
-                          .append(d.getNombre())
-                          .append("\n");
+                    ticket.append(fmt.wrapText(d.getCantidad() + " " + d.getNombre()));
                     if(d.getComentarios() != null && !d.getComentarios().isBlank()){
-                        ticket.append("Comentarios: ")
-                              .append(d.getComentarios())
-                              .append("\n");
+                        ticket.append(fmt.wrapText("Comentarios: " + d.getComentarios()));
                     }
                 }
-                ticket.append("----------------------------\n");
+                ticket.append(fmt.lineSeparator('-'));
             });
 
             String nombreImpresora = obtenerImpresoraSegunMenu(menu, parametros);
@@ -69,6 +69,16 @@ public class TicketComandaService {
         
             default:
                 return parametros.getImpresoraCocina();
+        }
+    }
+
+    private int obtenerTamanoPapel(String menu, Parametros parametros) {
+        switch (menu.toUpperCase()) {
+            case "BEBIDA":
+                return parametros.getImpresoraBarPapel();
+        
+            default:
+                return parametros.getImpresoraCocinaPapel();
         }
     }
 }
