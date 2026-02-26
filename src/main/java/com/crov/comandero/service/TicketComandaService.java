@@ -33,7 +33,7 @@ public class TicketComandaService {
             ticket.append(fmt.lineSeparator('='));
             ticket.append(fmt.lineTextRight("Mesa:", dto.getMesa()));
             ticket.append(fmt.lineSeparator('='));
-            ticket.append(fmt.lineTextRight("Fecha:", dto.getFecha().toString()));
+            ticket.append(fmt.lineTextRight("Fecha:", dto.getFecha()));
             ticket.append(fmt.lineSeparator('='));
 
             personasMap.forEach((persona, detalles) -> {

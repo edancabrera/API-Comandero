@@ -1,6 +1,5 @@
 package com.crov.comandero.dto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +7,7 @@ public class TicketComandaDTO {
     private String tipo;
     private String mesa;
     private String mesero;
-    private LocalDateTime fecha;
+    private String fecha;
 
     private Map<String, Map<String, List<TicketComandaDetalleDTO>>> detalle;
 
@@ -36,11 +35,11 @@ public class TicketComandaDTO {
         this.mesero = mesero;
     }
 
-    public LocalDateTime getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
