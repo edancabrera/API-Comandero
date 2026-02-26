@@ -74,6 +74,8 @@ public class TicketComandaService {
         switch (menu.toUpperCase()) {
             case "BEBIDA":
                 return parametros.getImpresoraBar();
+            case "ZARANDEADOS":
+                return parametros.getImpresoraAsador();
         
             default:
                 return parametros.getImpresoraCocina();
@@ -84,6 +86,8 @@ public class TicketComandaService {
         switch (menu.toUpperCase()) {
             case "BEBIDA":
                 return parametros.getImpresoraBarPapel();
+            case "ZARANDEADOS":
+                return parametros.getImpresoraAsadorPapel();
         
             default:
                 return parametros.getImpresoraCocinaPapel();
