@@ -5,13 +5,14 @@ import com.crov.comandero.model.Menu;
 public class ProductoPlatilloDTO {
     public ProductoPlatilloDTO(){}
 
-    public ProductoPlatilloDTO(Integer idProducto, String nombre, Double precio1, Integer idCategoriaPlatillo, String nombreCategoria, Menu menu){
+    public ProductoPlatilloDTO(Integer idProducto, String nombre, Double precio1, Integer idCategoriaPlatillo, String nombreCategoria, Menu menu, Double iva){
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.precio1 = precio1;
         this.idCategoriaPlatillo = idCategoriaPlatillo;
         this.nombreCategoria = nombreCategoria;
         this.menu = menu;
+        this.iva = iva;
     }
 
     private Integer idProducto;
@@ -20,6 +21,7 @@ public class ProductoPlatilloDTO {
     private Integer idCategoriaPlatillo;
     private String nombreCategoria;
     private Menu menu;
+    private Double iva;
 
     public Integer getIdProducto() {
         return idProducto;
@@ -60,5 +62,13 @@ public class ProductoPlatilloDTO {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public Double getIva() {
+        return iva;
+    }
+
+    public void setIva(Double iva) {
+        this.iva = iva;
     }
 }

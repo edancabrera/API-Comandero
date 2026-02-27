@@ -41,7 +41,8 @@ public class CategoriaPlatilloService {
                     platillo.getPrecio1(),
                     platillo.getCategoriaPlatillo() != null ? platillo.getCategoriaPlatillo().getId() : null,
                     platillo.getCategoriaPlatillo().getNombre(),
-                    platillo.getCategoriaPlatillo().getMenu()
+                    platillo.getCategoriaPlatillo().getMenu(),
+                    platillo.getImpuesto().getIva()
                 ))
                 .toList();
         

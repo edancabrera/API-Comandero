@@ -15,10 +15,11 @@ public class ObtenerComandaDetalleDTO {
     private Integer estatusCocina;
     private String nombreCategoria;
     private Menu menu;
+    private Double iva;
 
     public ObtenerComandaDetalleDTO() {}
     
-    public ObtenerComandaDetalleDTO(Integer id, Integer idComanda, Integer idPlatillo, Integer cantidad, String comentarios, Integer persona, Integer idCategoriaPlatillo, String nombre, Double precio, Integer estatusCocina, String nombreCategoria, Menu menu) {
+    public ObtenerComandaDetalleDTO(Integer id, Integer idComanda, Integer idPlatillo, Integer cantidad, String comentarios, Integer persona, Integer idCategoriaPlatillo, String nombre, Double precio, Integer estatusCocina, String nombreCategoria, Menu menu, Double iva) {
         this.id = id;
         this.idComanda = idComanda;
         this.idPlatillo = idPlatillo;
@@ -31,6 +32,7 @@ public class ObtenerComandaDetalleDTO {
         this.estatusCocina = estatusCocina;
         this.nombreCategoria = nombreCategoria;
         this.menu = menu;
+        this.iva = iva;
     }
     
     public Integer getId() {
@@ -127,6 +129,14 @@ public class ObtenerComandaDetalleDTO {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public Double getIva() {
+        return iva;
+    }
+
+    public void setIva(Double iva) {
+        this.iva = iva;
     }
     
 

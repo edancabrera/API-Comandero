@@ -135,6 +135,7 @@ public class ComandaService {
                 d.setEstatusCocina(detalle.getEstatusCocina());
                 d.setNombreCategoria(detalle.getPlatillo().getCategoriaPlatillo().getNombre());
                 d.setMenu(detalle.getPlatillo().getCategoriaPlatillo().getMenu());
+                d.setIva(detalle.getIva());
                 return d;
             })
             .toList();
