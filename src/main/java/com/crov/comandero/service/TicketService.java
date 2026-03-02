@@ -2,6 +2,7 @@ package com.crov.comandero.service;
 
 import org.springframework.stereotype.Service;
 
+import com.crov.comandero.dto.TicketCobroDTO;
 import com.crov.comandero.dto.TicketComandaDTO;
 import com.crov.comandero.dto.TicketComandaDetalleDTO;
 import com.crov.comandero.model.Parametros;
@@ -92,5 +93,40 @@ public class TicketService {
             default:
                 return parametros.getImpresoraCocinaPapel();
         }
+    }
+
+    public void generarEImprimirTicketDeCobro(TicketCobroDTO dto) {
+        Parametros parametros = parametrosRepository.findById(1).orElseThrow(() -> new RuntimeException("No se encontraron parámetros"));
+
+        TicketFormatter fmt = new TicketFormatter(parametros.getImpresoraAdminPapel());
+
+        StringBuilder ticket = new StringBuilder();
+
+        ticket.append(fmt.lineSeparator('='));
+        ticket.append(fmt.lineTextRight("Mesero:", dto.getMesero()));
+        ticket.append(fmt.lineTextRight("Mesa:", dto.getMesa()));
+        ticket.append(fmt.lineTextRight("Fecha:", dto.getFecha()));
+        ticket.append(fmt.lineSeparator('='));
+        ticket.append(fmt.lineTextRight("Cantidad", "Total"));
+        dto.getDetalle().forEach(detalle -> {
+            ticket.append(fmt.lineTextRight(detalle.getNombre(), null));
+            ticket.append(fmt.lineTextRight(detalle.getCantidad().toString(), detalle.getSubtotal().toString()));
+        });
+        ticket.append(fmt.lineSeparator('='));
+        ticket.append(fmt.lineTextRight("Total: ", dto.getTotal().toString()));
+        ticket.append(fmt.lineSeparator('='));
+        ticket.append(fmt.wrapText("PROPINA RECOMANDADA: "));
+        ticket.append(fmt.lineThreeText("10%", "15%", "%20"));
+        Double[] propina = new Double[] { dto.getTotal() * 0.10, dto.getTotal() * 0.15, dto.getTotal() * 0.20 };
+        ticket.append(fmt.lineThreeText(propina[0].toString(), propina[1].toString(), propina[2].toString()));
+        ticket.append(fmt.lineSeparator('='));
+        ticket.append(fmt.wrapText("CROV RESTAURANTE "));
+        ticket.append(fmt.wrapText("Total en pesos, eventualmente "));
+
+        try {
+                printerService.print(parametros.getImpresoraAdmin(), ticket.toString());
+            } catch (Exception e) {
+                throw new RuntimeException("Error al imprimir en "+ parametros.getImpresoraAdmin(), e);
+            }
     }
 }

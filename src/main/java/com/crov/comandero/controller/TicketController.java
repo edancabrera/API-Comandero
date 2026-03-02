@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.crov.comandero.dto.TicketCobroDTO;
 import com.crov.comandero.dto.TicketComandaDTO;
 import com.crov.comandero.service.TicketService;
 
@@ -19,6 +20,12 @@ public class TicketController {
     @PostMapping("/ticket")
     public ResponseEntity<Void> imprimirTicket( @RequestBody TicketComandaDTO request ) {
             ticketService.generarEImprimir(request);
+            return ResponseEntity.ok().build();
+        }
+    
+    @PostMapping("/ticket-cobro")
+    public ResponseEntity<Void> imprimirTicketCobro( @RequestBody TicketCobroDTO request ) {
+            ticketService.generarEImprimirTicketDeCobro(request);
             return ResponseEntity.ok().build();
         }
 }
