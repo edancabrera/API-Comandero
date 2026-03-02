@@ -9,12 +9,12 @@ import com.crov.comandero.repository.ParametrosRepository;
 import com.crov.comandero.util.TicketFormatter;
 
 @Service
-public class TicketComandaService {
+public class TicketService {
 
     private final PrinterService printerService;
     private final ParametrosRepository parametrosRepository;
 
-    public TicketComandaService(PrinterService printerService, ParametrosRepository parametrosRepository){
+    public TicketService(PrinterService printerService, ParametrosRepository parametrosRepository){
         this.printerService = printerService;
         this.parametrosRepository = parametrosRepository;
     }
