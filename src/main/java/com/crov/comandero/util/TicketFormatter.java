@@ -1,5 +1,10 @@
 package com.crov.comandero.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class TicketFormatter {
     private final int lineWidth;
 
@@ -81,5 +86,19 @@ public class TicketFormatter {
     private String paddingLeft(String text){
         if(text.length()>= lineWidth) return text;
         return " ".repeat(lineWidth-text.length()) + text;
+    }
+
+    public String money(String valor) {
+        try {
+            BigDecimal bd = new BigDecimal(valor).setScale(2, RoundingMode.HALF_UP);
+
+            NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("es" , "MX"));
+            nf.setMinimumFractionDigits(2);
+            nf.setMaximumFractionDigits(2);
+
+            return nf.format(bd);
+        } catch (NumberFormatException e) {
+            return "$" + valor;
+        }
     }
 }

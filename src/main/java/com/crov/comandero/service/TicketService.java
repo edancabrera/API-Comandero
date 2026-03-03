@@ -121,15 +121,19 @@ public class TicketService {
         ticket.append(fmt.lineTextRight("Cantidad", "Total"));
         dto.getDetalle().forEach(detalle -> {
             ticket.append(fmt.lineTextRight(detalle.getNombre(), null));
-            ticket.append(fmt.lineTextRight(detalle.getCantidad().toString(), detalle.getSubtotal().toString()));
+            ticket.append(fmt.lineTextRight(detalle.getCantidad().toString(), fmt.money(detalle.getSubtotal().toString())));
         });
         ticket.append(fmt.lineSeparator('='));
-        ticket.append(fmt.lineTextRight("Total: ", dto.getTotal().toString()));
+        ticket.append(fmt.lineTextRight("Total: ", fmt.money(dto.getTotal().toString())));
         ticket.append(fmt.lineSeparator('='));
         ticket.append(fmt.wrapText("PROPINA RECOMANDADA: "));
         ticket.append(fmt.lineThreeText("10%", "15%", "20%"));
         Double[] propina = new Double[] { dto.getTotal() * 0.10, dto.getTotal() * 0.15, dto.getTotal() * 0.20 };
-        ticket.append(fmt.lineThreeText(propina[0].toString(), propina[1].toString(), propina[2].toString()));
+        ticket.append(fmt.lineThreeText(
+            fmt.money(propina[0].toString()), 
+            fmt.money(propina[1].toString()), 
+            fmt.money(propina[2].toString())
+        ));
         ticket.append(fmt.lineSeparator('='));
         ticket.append(fmt.wrapText("CROV RESTAURANTE "));
         ticket.append(fmt.wrapText("Total en pesos, eventualmente "));
