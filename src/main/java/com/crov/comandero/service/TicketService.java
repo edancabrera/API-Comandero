@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import com.crov.comandero.dto.TicketCobroDTO;
 import com.crov.comandero.dto.TicketComandaDTO;
 import com.crov.comandero.dto.TicketComandaDetalleDTO;
+import com.crov.comandero.model.Empresa;
 import com.crov.comandero.model.Parametros;
+import com.crov.comandero.repository.EmpresaRepository;
 import com.crov.comandero.repository.ParametrosRepository;
 import com.crov.comandero.util.TicketFormatter;
 
@@ -14,10 +16,12 @@ public class TicketService {
 
     private final PrinterService printerService;
     private final ParametrosRepository parametrosRepository;
+    private final EmpresaRepository empresaRepository;
 
-    public TicketService(PrinterService printerService, ParametrosRepository parametrosRepository){
+    public TicketService(PrinterService printerService, ParametrosRepository parametrosRepository, EmpresaRepository empresaRepository){
         this.printerService = printerService;
         this.parametrosRepository = parametrosRepository;
+        this.empresaRepository = empresaRepository;
     }
     
     public void generarEImprimir(TicketComandaDTO dto){
@@ -98,10 +102,17 @@ public class TicketService {
     public void generarEImprimirTicketDeCobro(TicketCobroDTO dto) {
         Parametros parametros = parametrosRepository.findById(1).orElseThrow(() -> new RuntimeException("No se encontraron parámetros"));
 
+        Empresa empresa = empresaRepository.findById(1).orElseThrow(() -> new RuntimeException("No se encontraró empresa"));
+
+
         TicketFormatter fmt = new TicketFormatter(parametros.getImpresoraAdminPapel());
 
         StringBuilder ticket = new StringBuilder();
 
+        ticket.append(fmt.center(empresa.getNombreComercial()));
+        ticket.append(fmt.center(empresa.getDireccion()));
+        ticket.append(fmt.center(empresa.getColonia() + " C.P. " + empresa.getCp()));
+        ticket.append(fmt.center(empresa.getMunicipio()+", "+ empresa.getEstado()));
         ticket.append(fmt.lineSeparator('='));
         ticket.append(fmt.lineTextRight("Mesero:", dto.getMesero()));
         ticket.append(fmt.lineTextRight("Mesa:", dto.getMesa()));
@@ -116,7 +127,7 @@ public class TicketService {
         ticket.append(fmt.lineTextRight("Total: ", dto.getTotal().toString()));
         ticket.append(fmt.lineSeparator('='));
         ticket.append(fmt.wrapText("PROPINA RECOMANDADA: "));
-        ticket.append(fmt.lineThreeText("10%", "15%", "%20"));
+        ticket.append(fmt.lineThreeText("10%", "15%", "20%"));
         Double[] propina = new Double[] { dto.getTotal() * 0.10, dto.getTotal() * 0.15, dto.getTotal() * 0.20 };
         ticket.append(fmt.lineThreeText(propina[0].toString(), propina[1].toString(), propina[2].toString()));
         ticket.append(fmt.lineSeparator('='));
