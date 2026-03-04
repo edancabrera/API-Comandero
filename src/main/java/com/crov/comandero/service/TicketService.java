@@ -9,6 +9,7 @@ import com.crov.comandero.model.Empresa;
 import com.crov.comandero.model.Parametros;
 import com.crov.comandero.repository.EmpresaRepository;
 import com.crov.comandero.repository.ParametrosRepository;
+import com.crov.comandero.util.NumerosLetras;
 import com.crov.comandero.util.TicketFormatter;
 
 @Service
@@ -185,7 +186,9 @@ public class TicketService {
         }
 
         ticket.append(fmt.wrapText("CROV RESTAURANTE "));
-        ticket.append(fmt.wrapText("Total en pesos, eventualmente "));
+        
+        NumerosLetras nl = new NumerosLetras();
+        ticket.append(fmt.wrapText(nl.Convertir(dto.getTotal().toString(), true)));
 
         try {
                 printerService.print(parametros.getImpresoraAdmin(), ticket.toString());
