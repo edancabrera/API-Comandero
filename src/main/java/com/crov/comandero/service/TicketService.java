@@ -109,32 +109,81 @@ public class TicketService {
 
         StringBuilder ticket = new StringBuilder();
 
+        double iva = 0.0;
+
         ticket.append(fmt.center(empresa.getNombreComercial()));
         ticket.append(fmt.center(empresa.getDireccion()));
         ticket.append(fmt.center(empresa.getColonia() + " C.P. " + empresa.getCp()));
         ticket.append(fmt.center(empresa.getMunicipio()+", "+ empresa.getEstado()));
+
+        if(Boolean.TRUE.equals(parametros.getMostrarTelefono())){
+            ticket.append(fmt.center("Tel. y WhatsApp: " + empresa.getCel()));
+            ticket.append(fmt.center("Telefono: " + empresa.getTel()));
+        }
+
         ticket.append(fmt.lineSeparator('='));
         ticket.append(fmt.lineTextRight("Mesero:", dto.getMesero()));
         ticket.append(fmt.lineTextRight("Mesa:", dto.getMesa()));
         ticket.append(fmt.lineTextRight("Fecha:", dto.getFecha()));
+
+        if(Boolean.FALSE.equals(parametros.getOcultarFolio())){
+            ticket.append(fmt.lineTextRight("Folio:", ""));
+        }
+
         ticket.append(fmt.lineSeparator('='));
-        ticket.append(fmt.lineTextRight("Cantidad", "Total"));
-        dto.getDetalle().forEach(detalle -> {
-            ticket.append(fmt.lineTextRight(detalle.getNombre(), null));
-            ticket.append(fmt.lineTextRight(detalle.getCantidad().toString(), fmt.money(detalle.getSubtotal().toString())));
-        });
+
+        if(Boolean.TRUE.equals(parametros.getMostrarPrecioUnitario())){
+            ticket.append(fmt.lineThreeText("Cantidad","Precio" ,"Total"));
+            for (var detalle : dto.getDetalle()) {
+                ticket.append(fmt.lineTextRight(detalle.getNombre(), null));
+                ticket.append(fmt.lineThreeText(
+                        detalle.getCantidad().toString(),
+                        fmt.money(String.valueOf(detalle.getPrecioUnitario())),
+                        fmt.money(String.valueOf(detalle.getSubtotal()))
+                ));
+
+                double porcentajeIva = detalle.getIva() / 100.0;
+                double detalleIva = porcentajeIva * detalle.getPrecioUnitario();
+                iva += detalle.getCantidad() * detalleIva;
+            }
+        } else {
+            ticket.append(fmt.lineTextRight("Cantidad", "Total"));
+            for (var detalle : dto.getDetalle()) {
+                ticket.append(fmt.lineTextRight(detalle.getNombre(), null));
+                ticket.append(fmt.lineTextRight(
+                        detalle.getCantidad().toString(),
+                        fmt.money(String.valueOf(detalle.getSubtotal()))
+                ));
+
+                double porcentajeIva = detalle.getIva() / 100.0;
+                double detalleIva = porcentajeIva * detalle.getPrecioUnitario();
+                iva += detalle.getCantidad() * detalleIva;
+            }
+        }
+
         ticket.append(fmt.lineSeparator('='));
+
+        if(Boolean.TRUE.equals(parametros.getMostrarImpuestos())){
+            double subtotal = dto.getTotal() - iva;
+            ticket.append(fmt.lineTextRight("Subtotal: ", fmt.money(String.valueOf(subtotal))));
+            ticket.append(fmt.lineTextRight("IVA: ", fmt.money(String.valueOf(iva))));
+        } 
+
         ticket.append(fmt.lineTextRight("Total: ", fmt.money(dto.getTotal().toString())));
         ticket.append(fmt.lineSeparator('='));
-        ticket.append(fmt.wrapText("PROPINA RECOMANDADA: "));
-        ticket.append(fmt.lineThreeText("10%", "15%", "20%"));
-        Double[] propina = new Double[] { dto.getTotal() * 0.10, dto.getTotal() * 0.15, dto.getTotal() * 0.20 };
-        ticket.append(fmt.lineThreeText(
-            fmt.money(propina[0].toString()), 
-            fmt.money(propina[1].toString()), 
-            fmt.money(propina[2].toString())
-        ));
-        ticket.append(fmt.lineSeparator('='));
+
+        if(Boolean.TRUE.equals(parametros.getMostrarPorpinaSugerida())){
+            ticket.append(fmt.wrapText("PROPINA RECOMANDADA: "));
+            ticket.append(fmt.lineThreeText("10%", "15%", "20%"));
+            Double[] propina = new Double[] { dto.getTotal() * 0.10, dto.getTotal() * 0.15, dto.getTotal() * 0.20 };
+            ticket.append(fmt.lineThreeText(
+                fmt.money(propina[0].toString()), 
+                fmt.money(propina[1].toString()), 
+                fmt.money(propina[2].toString())
+            ));
+            ticket.append(fmt.lineSeparator('='));
+        }
+
         ticket.append(fmt.wrapText("CROV RESTAURANTE "));
         ticket.append(fmt.wrapText("Total en pesos, eventualmente "));
 

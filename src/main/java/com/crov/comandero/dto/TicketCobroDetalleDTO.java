@@ -4,14 +4,16 @@ public class TicketCobroDetalleDTO {
 
     private String nombre;
     private Integer cantidad;
+    private Double precioUnitario;
     private Double subtotal;
     private Integer iva;
     
     public TicketCobroDetalleDTO() {}
 
-    public TicketCobroDetalleDTO(String nombre, Integer cantidad, Double subtotal, Integer iva) {
+    public TicketCobroDetalleDTO(String nombre, Integer cantidad, Double precioUnitario, Double subtotal, Integer iva) {
         this.nombre = nombre;
         this.cantidad = cantidad;
+        this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
         this.iva = iva;
     }
@@ -39,5 +41,13 @@ public class TicketCobroDetalleDTO {
     }
     public void setIva(Integer iva) {
         this.iva = iva;
+    }
+
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 }
