@@ -41,6 +41,21 @@ public class Parametros {
     @Column(name = "impresora_asador_papel")
     private Integer impresoraAsadorPapel;
 
+    @Column(name = "mostrar_precio_unitario_ticket")
+    private Boolean mostrarPrecioUnitario;
+
+    @Column(name = "impuestos_ticket_venta")
+    private Boolean mostrarImpuestos;
+
+    @Column(name = "mostrar_propina_sugerida")
+    private Boolean mostrarPorpinaSugerida;
+
+    @Column(name = "ticket_venta_mostrar_telefono")
+    private Boolean mostrarTelefono;
+
+    @Column(name = "ocultar_folio_ticket_venta")
+    private Boolean ocultarFolio;
+
     public Integer getId() {
         return id;
     }
@@ -111,6 +126,46 @@ public class Parametros {
 
     public void setImpresoraAsadorPapel(Integer impresoraAsadorPapel) {
         this.impresoraAsadorPapel = impresoraAsadorPapel;
+    }
+
+    public Boolean getMostrarPrecioUnitario() {
+        return mostrarPrecioUnitario;
+    }
+
+    public void setMostrarPrecioUnitario(Boolean mostrarPrecioUnitario) {
+        this.mostrarPrecioUnitario = mostrarPrecioUnitario;
+    }
+
+    public Boolean getMostrarImpuestos() {
+        return mostrarImpuestos;
+    }
+
+    public void setMostrarImpuestos(Boolean mostrarImpuestos) {
+        this.mostrarImpuestos = mostrarImpuestos;
+    }
+
+    public Boolean getMostrarPorpinaSugerida() {
+        return mostrarPorpinaSugerida;
+    }
+
+    public void setMostrarPorpinaSugerida(Boolean mostrarPorpinaSugerida) {
+        this.mostrarPorpinaSugerida = mostrarPorpinaSugerida;
+    }
+
+    public Boolean getMostrarTelefono() {
+        return mostrarTelefono;
+    }
+
+    public void setMostrarTelefono(Boolean mostrarTelefono) {
+        this.mostrarTelefono = mostrarTelefono;
+    }
+
+    public Boolean getOcultarFolio() {
+        return ocultarFolio;
+    }
+
+    public void setOcultarFolio(Boolean ocultarFolio) {
+        this.ocultarFolio = ocultarFolio;
     }
 
 
