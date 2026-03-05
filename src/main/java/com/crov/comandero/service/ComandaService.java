@@ -9,6 +9,7 @@ import com.crov.comandero.dto.CrearComandaDTO;
 import com.crov.comandero.dto.CrearComandaDetalleDTO;
 import com.crov.comandero.dto.ObtenerComandaDTO;
 import com.crov.comandero.dto.ObtenerComandaDetalleDTO;
+import com.crov.comandero.dto.TicketCobroDTO;
 import com.crov.comandero.model.Comanda;
 import com.crov.comandero.model.ComandaDetalle;
 import com.crov.comandero.model.ComandaEstatus;
@@ -31,18 +32,21 @@ public class ComandaService {
     private final MesaRepository mesaRepository;
     private final UsuarioRepository usuarioRepository;
     private final ProductoRepository productoRepository;
+    private final TicketService ticketService;
     public ComandaService(
         ComandaRepository comandaRepository, 
         ComandaDetalleRepository comandaDetalleRepository,
         MesaRepository mesaRepository, 
         UsuarioRepository usuarioRepository, 
-        ProductoRepository productoRepository
+        ProductoRepository productoRepository,
+        TicketService ticketService
     ) {
         this.comandaRepository = comandaRepository;
         this.comandaDetalleRepository = comandaDetalleRepository;
         this.mesaRepository = mesaRepository;
         this.usuarioRepository = usuarioRepository;
         this.productoRepository = productoRepository;
+        this.ticketService = ticketService;
     }
     
     @Transactional
@@ -186,5 +190,14 @@ public class ComandaService {
         if(!detalles.isEmpty()) {
             comandaDetalleRepository.deleteAll(detalles);
         }
+    }
+
+    @Transactional
+    public void cobrarCuenta(Integer idMesa, TicketCobroDTO dto){
+        Mesa mesa = mesaRepository.findById(idMesa).orElseThrow(() -> new RuntimeException("Mesa no encontrada"));
+        mesa.setEstatus(MesaEstatus.COBRANDO);
+        mesaRepository.save(mesa);
+
+        ticketService.generarEImprimirTicketDeCobro(dto);
     }
 }

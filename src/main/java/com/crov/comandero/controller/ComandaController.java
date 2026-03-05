@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.crov.comandero.dto.CrearComandaDTO;
 import com.crov.comandero.dto.ObtenerComandaDTO;
+import com.crov.comandero.dto.TicketCobroDTO;
 import com.crov.comandero.service.ComandaService;
 
 import java.util.List;
@@ -44,6 +45,13 @@ public class ComandaController {
     @DeleteMapping("/comanda/detalle")
     public ResponseEntity<Void> eliminarDetalles(@RequestBody List<Integer> idsDetalles) {
         comandaService.eliminarDetalles(idsDetalles);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/comanda/mesa/{id}/cobrar")
+    public ResponseEntity <Void> enviarACobrar(@PathVariable Integer id, @RequestBody TicketCobroDTO request) {
+        comandaService.cobrarCuenta(id, request);
+        
         return ResponseEntity.ok().build();
     }
     
