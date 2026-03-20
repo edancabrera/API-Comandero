@@ -1,7 +1,10 @@
 package com.crov.comandero.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -199,5 +202,81 @@ public class ComandaService {
         mesaRepository.save(mesa);
 
         ticketService.generarEImprimirTicketDeCobro(dto);
+    }
+
+    @Transactional
+    public void crearComandasDesdeDivision(List<CrearComandaDTO> comandas, Integer idComandaPrincipal){
+
+        if (comandas == null || comandas.isEmpty()) {
+            throw new IllegalArgumentException("Lista de comandas vacía");
+        }
+
+        Comanda comandaPrincipal = comandaRepository.findById(idComandaPrincipal).orElseThrow(() -> new RuntimeException("Comanda no encontrada"));
+
+        Mesa mesa = comandaPrincipal.getMesa();
+
+        LocalDateTime fecha = LocalDateTime.now();
+
+        Usuario mesero = usuarioRepository.findById(comandas.get(0).getIdMesero()).orElseThrow(() -> new RuntimeException("Mesero no encontrado"));
+
+        
+
+        for (CrearComandaDTO dto : comandas) {
+                crearComandaNueva(dto, comandaPrincipal, mesa, mesero, fecha);
+        }
+
+        comandaPrincipal.setEstatus(ComandaEstatus.CANCELADO);
+        comandaRepository.save(comandaPrincipal);
+
+        mesa.setEstatus(MesaEstatus.COBRANDO);
+        mesaRepository.save(mesa);
+
+    }
+
+    //Método con el que se crean comandas nuevas obtenidas a partir de dividir una comanda existente
+    private void crearComandaNueva(CrearComandaDTO dto, Comanda comandaPrincipal, Mesa mesa, Usuario mesero, LocalDateTime fecha) {
+
+        Comanda comanda = new Comanda();
+        comanda.setMesa(mesa);
+        comanda.setMesero(mesero);
+        comanda.setFechaCreacion(fecha);
+        comanda.setEstatus(ComandaEstatus.CURSO);
+        comanda.setActivo(true);
+        comanda.setComandaPrincipal(comandaPrincipal);
+
+        comanda = comandaRepository.save(comanda);
+
+        List<ComandaDetalle> detalles = new ArrayList<>();
+
+        Map<Integer, Producto> productos = productoRepository
+            .findAllById(
+                dto.getDetalles().stream()
+                .map(CrearComandaDetalleDTO::getIdPlatillo)
+                .collect(Collectors.toSet())
+            )
+            .stream()
+            .collect(Collectors.toMap(Producto::getIdProducto, p -> p));
+
+        for(CrearComandaDetalleDTO d : dto.getDetalles()){
+            Producto producto = productos.get(d.getIdPlatillo());
+            
+            if (producto == null) {
+                throw new RuntimeException("Producto no encontrado: " + d.getIdPlatillo());
+            }
+
+            ComandaDetalle detalle = new ComandaDetalle();
+            detalle.setComanda(comanda);
+            detalle.setPlatillo(producto);
+            detalle.setCantidad(d.getCantidad());
+            detalle.setPrecio(producto.getPrecio1());
+            detalle.setCosto(producto.getCosto());
+            detalle.setIva(producto.getImpuesto().getIva());
+            detalle.setPersona(d.getPersona());
+            detalle.setComentarios(d.getComentarios());
+            detalle.setEstatusCocina(1);
+
+            detalles.add(detalle);
+        }
+        comandaDetalleRepository.saveAll(detalles);
     }
 }

@@ -54,5 +54,11 @@ public class ComandaController {
         
         return ResponseEntity.ok().build();
     }
-    
+
+    @PostMapping("/comanda/{id}/guardar-divididos")
+    public ResponseEntity <Void> guardarComandasDivididas(@RequestBody List<CrearComandaDTO> comandas, @PathVariable Integer id) {
+        comandaService.crearComandasDesdeDivision(comandas, id);
+        
+        return ResponseEntity.ok().build();
+    }
 }
