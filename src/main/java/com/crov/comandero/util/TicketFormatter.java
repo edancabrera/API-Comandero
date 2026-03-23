@@ -16,6 +16,11 @@ public class TicketFormatter {
         return String.valueOf(caracter).repeat(lineWidth) + "\n";
     }
 
+    public String lineSeparatorWithText(String text, char caracter) {
+        int side = (lineWidth - text.length() -2)/2;
+        return String.valueOf(caracter).repeat(side) + " " + text + " " + String.valueOf(caracter).repeat(side) + "\n";
+    }
+
     public String lineTextRight(String left, String right){
         if(left == null) left = "";
         if(right == null) right = "";

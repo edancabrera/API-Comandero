@@ -8,6 +8,7 @@ public class TicketComandaDTO {
     private String mesa;
     private String mesero;
     private String fecha;
+    private Boolean urgente;
 
     private Map<String, Map<String, List<TicketComandaDetalleDTO>>> detalle;
 
@@ -49,6 +50,14 @@ public class TicketComandaDTO {
 
     public void setDetalle(Map<String, Map<String, List<TicketComandaDetalleDTO>>> detalle) {
         this.detalle = detalle;
+    }
+
+    public Boolean getUrgente() {
+        return urgente;
+    }
+
+    public void setUrgente(Boolean urgente) {
+        this.urgente = urgente;
     }
 
 }
