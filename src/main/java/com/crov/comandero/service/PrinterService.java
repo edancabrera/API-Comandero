@@ -30,7 +30,7 @@ public class PrinterService {
         job.print(doc, null);
     }
 
-    private PrintService findPrinter(String printerName){
+    public PrintService findPrinter(String printerName){
         PrintService[] printers = PrintServiceLookup.lookupPrintServices(null, null);
         for(PrintService printer : printers){
             if(printer.getName().equalsIgnoreCase(printerName)){

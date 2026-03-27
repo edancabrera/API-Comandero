@@ -200,4 +200,28 @@ public class TicketService {
                 throw new RuntimeException("Error al imprimir en "+ parametros.getImpresoraAdmin(), e);
             }
     }
+
+    public String verifyPrinter(String printerType) {
+        Parametros parametros = parametrosRepository.findById(1)
+            .orElseThrow(() -> new RuntimeException("No se encontraron parámetros"));
+
+        String printerName;
+
+        switch (printerType.toUpperCase()) {
+            case "COCINA":
+                printerName = parametros.getImpresoraCocina();
+                break;
+            case "ADMIN":
+                printerName = parametros.getImpresoraAdmin();
+                break;
+            default:
+                throw new IllegalArgumentException("Tipo de impresora inválido para: " + printerType);
+        }
+
+        if (printerName == null || printerName.isBlank()) {
+            throw new IllegalStateException("No hay impresora configurada para: " + printerType);
+        }
+
+        return printerName;
+    }
 }
