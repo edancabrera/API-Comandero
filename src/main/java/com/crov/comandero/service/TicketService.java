@@ -80,16 +80,22 @@ public class TicketService {
     }
 
     private String obtenerImpresoraSegunMenu(String menu, Parametros parametros) {
+        String impresora;
 
         switch (menu.toUpperCase()) {
             case "BEBIDA":
-                return parametros.getImpresoraBar();
+                impresora =  parametros.getImpresoraBar();
+                break;
             case "ZARANDEADOS":
-                return parametros.getImpresoraAsador();
+                impresora =  parametros.getImpresoraAsador();
+                break;
         
             default:
-                return parametros.getImpresoraCocina();
+                impresora =  parametros.getImpresoraCocina();
+                break;
         }
+
+        return impresora != null ? impresora : parametros.getImpresoraCocina();
     }
 
     private int obtenerTamanoPapel(String menu, Parametros parametros) {
