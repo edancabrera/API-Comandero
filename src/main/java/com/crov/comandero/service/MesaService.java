@@ -1,6 +1,8 @@
 package com.crov.comandero.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -25,15 +27,34 @@ public class MesaService {
     }
 
     public List<MesaDTO> obtenerMesasPorArea(Integer idArea){
-        return mesaRepository.findByAreaIdAndActivoTrue(idArea)
-                .stream()
-                .map(mesa -> new MesaDTO(
-                    mesa.getId(),
-                    mesa.getArea() != null ? mesa.getArea().getId() : null,
-                    mesa.getNombre(),
-                    mesa.getEstatus(),
-                    mesa.getMesaPrincipal() != null ? mesa.getMesaPrincipal().getId() : null
-                ))
+        List<Mesa> mesas = mesaRepository.findByAreaIdAndActivoTrue(idArea);
+
+        if(mesas.isEmpty()){ return List.of();}
+
+        List<Integer> mesasIds = mesas.stream()
+            .map(Mesa::getId)
+            .toList();
+        
+        List<Object[]> relaciones = mesaRepository.findHijasByMesaPrincipalIds(mesasIds);
+
+        Map<Integer, List<Integer>> mapaHijas = relaciones.stream()
+            .collect(Collectors.groupingBy(
+                r -> (Integer) r[0],
+                Collectors.mapping(r -> (Integer) r[1], Collectors.toList())
+            ));
+
+        return mesas.stream()
+                .map(mesa -> {
+                    MesaDTO m = new MesaDTO();
+                    m.setId(mesa.getId());
+                    m.setAreaId(mesa.getArea() != null ? mesa.getArea().getId() : null);
+                    m.setNombre(mesa.getNombre());
+                    m.setEstatus(mesa.getEstatus());
+                    m.setMesaPrincipalId(mesa.getMesaPrincipal() != null ? mesa.getMesaPrincipal().getId() : null);
+                    m.setMesasHijasIds(mapaHijas.getOrDefault(mesa.getId(), List.of()));
+
+                    return m;
+                })
                 .toList();
     }
 

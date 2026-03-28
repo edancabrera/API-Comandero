@@ -1,5 +1,7 @@
 package com.crov.comandero.dto;
 
+import java.util.List;
+
 import com.crov.comandero.model.MesaEstatus;
 
 public class MesaDTO {
@@ -9,6 +11,7 @@ public class MesaDTO {
     private String nombre;
     private MesaEstatus estatus;
     private Integer mesaPrincipalId;
+    private List<Integer> mesasHijasIds;
 
     public MesaDTO(){}
 
@@ -58,6 +61,14 @@ public class MesaDTO {
 
     public void setMesaPrincipalId(Integer mesaPrincipalId) {
         this.mesaPrincipalId = mesaPrincipalId;
+    }
+
+    public List<Integer> getMesasHijasIds() {
+        return mesasHijasIds;
+    }
+
+    public void setMesasHijasIds(List<Integer> mesasHijasIds) {
+        this.mesasHijasIds = mesasHijasIds;
     }
 
 }
