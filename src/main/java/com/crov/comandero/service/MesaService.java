@@ -14,6 +14,7 @@ import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.repository.ComandaRepository;
 import com.crov.comandero.repository.MesaRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -135,6 +136,24 @@ public class MesaService {
         return indice != -1
                 ? nombreMesa.substring(0, indice)
                 : nombreMesa;
+    }
+
+    public Map<String, Object> estatusMesa(Integer idMesa) {
+        Mesa mesa = mesaRepository.findById(idMesa).orElseThrow(() -> new EntityNotFoundException("Mesa no encontrada"));
+        Boolean disponible = mesa.getEstatus() == MesaEstatus.DISPONIBLE;
+        Boolean ocupada = mesa.getEstatus() == MesaEstatus.OCUPADO;
+        String message = disponible ? "Mesa disponible" : "Mesa no disponible";
+        MesaEstatus estatus = mesa.getEstatus();
+        String nombre = mesa.getNombre();
+       return 
+        Map.of(
+            "idMesa", idMesa,
+            "nombre", nombre,
+            "disponible", disponible,
+            "ocupada", ocupada,
+            "estatus", estatus,
+            "message" , message
+        );
     }
 
 }

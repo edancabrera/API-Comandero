@@ -10,6 +10,7 @@ import com.crov.comandero.model.MesaEstatus;
 import com.crov.comandero.service.MesaService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,4 +68,10 @@ public class MesaController {
         );
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/mesas/{id}/verificar-estatus")
+    public ResponseEntity<Map<String, Object>>  verificarEstatusMesa(@PathVariable Integer id) {
+        return ResponseEntity.ok(mesaService.estatusMesa(id));
+    }
+    
 }
