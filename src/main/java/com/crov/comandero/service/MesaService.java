@@ -115,7 +115,7 @@ public class MesaService {
         }
 
         Comanda comanda = comandaRepository
-                            .findByMesaIdAndEstatus(idMesaOrigen, ComandaEstatus.CURSO)
+                            .findFirstByMesaIdAndEstatusOrderByIdDesc(idMesaOrigen, ComandaEstatus.CURSO)
                             .orElseThrow(()-> new RuntimeException("No existe comanda en curso en la mesa origen"));
         
         comandaRepository.cambiarMesa(comanda.getId(), idMesaDestino);
