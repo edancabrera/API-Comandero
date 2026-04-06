@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ComandaRepository extends JpaRepository<Comanda, Integer>{
     List<Comanda> findByEstatus(ComandaEstatus estatus);
 
-    Optional<Comanda> findByMesaIdAndEstatus(Integer mesaId, ComandaEstatus estatus);
+    Optional<Comanda> findFirstByMesaIdAndEstatusOrderByIdDesc(Integer mesaId, ComandaEstatus estatus);
 
     @Modifying
     @Query("""

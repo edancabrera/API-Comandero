@@ -60,7 +60,7 @@ public class ComandaService {
 
         //Buscar comanda activa
         Comanda comanda = comandaRepository
-            .findByMesaIdAndEstatus(mesa.getId(), ComandaEstatus.CURSO)
+            .findFirstByMesaIdAndEstatusOrderByIdDesc(mesa.getId(), ComandaEstatus.CURSO)
             .orElse(null);
         
         //Crearla comanda sino existe
@@ -117,7 +117,7 @@ public class ComandaService {
 
     public ObtenerComandaDTO obtenerComandaActivaPorMesa(Integer idMesa) {
         Comanda comanda = comandaRepository
-                .findByMesaIdAndEstatus(idMesa, ComandaEstatus.CURSO)
+                .findFirstByMesaIdAndEstatusOrderByIdDesc(idMesa, ComandaEstatus.CURSO)
                 .orElseThrow(() -> new RuntimeException("La mesa no tiene comanda activa"));
         
         ObtenerComandaDTO dto = new ObtenerComandaDTO();
@@ -161,7 +161,7 @@ public class ComandaService {
     @Transactional
     public void cancelarComanda(Integer idMesa, Integer idUsuario) {
         Comanda comanda = comandaRepository
-            .findByMesaIdAndEstatus(idMesa, ComandaEstatus.CURSO)
+            .findFirstByMesaIdAndEstatusOrderByIdDesc(idMesa, ComandaEstatus.CURSO)
             .orElseThrow(() -> new RuntimeException("No hay comanda activa para cancelar"));
         
         Usuario usuario = usuarioRepository.findById(idUsuario)
