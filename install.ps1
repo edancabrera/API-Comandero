@@ -159,13 +159,34 @@ if (-not $MysqlService) {
         Show-CloseCountdown "La instalación falló" 1 "White" "Red"
     }
 
-    if ($mysqlServices.Count -gt 1) {
-        Write-Warning "Se encontraron multiples servicios MySQL:"
-        $mysqlServices | ForEach-Object { Write-Host "- $($_.Name)" }
+    elseif ($mysqlServices.count -eq 1) {
+        $MysqlService = $mysqlServices[0].Name
     }
 
-    $MysqlService = $mysqlServices[0].Name
+    else {
+        Write-Host "Se encontraron multiples servicios MySQL:`n"
+
+        for($i = 0; $i -lt $mysqlExe.Count; $i++) {
+            Write-Host "[$i] $($mysqlServices[$i].Name) - Estado $($mysqlServices[$i].Status)"
+        }
+
+        do {
+            $selection = Read-Host "Seleccione el numero del servicio MySQL a usar"
+
+            $isValid = $selection -match '\d+$' -and 
+                [int]$selection -ge 0 -and
+                [int]$selection -lt $mysqlServices.Count
+            
+            if (-not $isValid) {
+                Write-Warning "Seleccion invalida. Intente nuevamente."
+            }
+
+        } while (-not $isValid)
+    }
+
+    $MysqlService = $mysqlServices[[int]$selection].Name
 }
+
 Write-Host "Usando servicio MySQL: $MysqlService"
 
 #Validar que el servicio se esté ejecutando, si no, iniciar servicio
@@ -455,4 +476,4 @@ else {
 
 Write-Host "=== INSTALACION COMPLETADA ==="
 
-Show-CloseCountdown "Instalación completada correctamente" 0 "Green" "Black"
+Show-CloseCountdown "Instalacion completada correctamente" 0 "Green" "Black"
