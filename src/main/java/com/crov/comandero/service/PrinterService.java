@@ -26,7 +26,10 @@ public class PrinterService {
 
         //Comandos ESC/POS
         //Avance de papel, (0X0A = LF (Line Feed))
-        byte[] feed = new byte[]{0x0A, 0x0A, 0x0A};
+        byte[] feed = new byte[]{
+            0x0A, 0x0A, 0x0A, 0x0A,
+            0x0A, 0x0A, 0x0A, 0x0A
+        };
         //Corte de papel (corte completo)
         byte[] cut = new byte[]{0x1D, 0x56, 0x00};
         //Construcción del mensaje final,
